@@ -79,7 +79,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <ProgressBar x:Name="playerHealthBar" Width="400" Height="30" Background="Red" Foreground="Green" Value="{Binding Path=PlayerHealth,UpdateSourceTrigger=PropertyChanged}" Margin="2.5" Grid.Column="0" HorizontalAlignment="Left" />
-                    <Label x:Name="playerHealthBarLabel" Content="{Binding PlayerHealth, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource statBarLabels}" Margin="2.5" Grid.Column="0"  />
+                    <Label x:Name="playerHealthBarLabel" Content="{Binding PlayerHealth}"  Style="{StaticResource statBarLabels}" Margin="2.5" Grid.Column="0"  />
 
                 </StackPanel>
                 <TextBox x:Name="CommandBox" Style="{StaticResource CommandBoxStyle}" Grid.Column="0" Width="529" Height="65" />

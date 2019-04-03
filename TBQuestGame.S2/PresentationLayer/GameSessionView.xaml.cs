@@ -189,6 +189,8 @@ namespace TBQuestGame.PresentationLayer
                         TipsBox.Foreground = Brushes.Red;
                         TipsBox.FontWeight = FontWeights.Bold;
                         TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
+                        playerShieldBar.Value += 35;
+                        playerShieldBarLabel.Content = playerShieldBar.Value; 
                         BossBattleStart();
                         LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                         DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
@@ -199,7 +201,18 @@ namespace TBQuestGame.PresentationLayer
                 mapWindow.LocationDescriptionDisplay.Text = _gameSessionViewModel.GameMap.CurrentLocation.Description;
             } 
         }
-
+        private void bossRoomEnterUpdate()
+        {
+            TipsBox.Foreground = Brushes.Red;
+            TipsBox.FontWeight = FontWeights.Bold;
+            TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";  
+            playerShieldBar.Value += 35;
+            playerShieldBarLabel.Content = playerShieldBar.Value;
+            BossBattleStart();
+            LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
+            DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+            Location.disableControls(this);
+        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //
@@ -213,13 +226,7 @@ namespace TBQuestGame.PresentationLayer
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
                     {
-                        TipsBox.Foreground = Brushes.Red;
-                        TipsBox.FontWeight = FontWeights.Bold;
-                        TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
-                        BossBattleStart();
-                        LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
-                        DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                        Location.disableControls(this);
+                        bossRoomEnterUpdate();
                     }
                 }
                 mapWindow.CurrentLocationDisplay.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
@@ -243,13 +250,8 @@ namespace TBQuestGame.PresentationLayer
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
                     {
-                        TipsBox.Foreground = Brushes.Red;
-                        TipsBox.FontWeight = FontWeights.Bold;
-                        TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
-                        BossBattleStart();
-                        LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
-                        DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                        Location.disableControls(this);
+                        bossRoomEnterUpdate();
+
                     }
 
                 }
@@ -273,13 +275,8 @@ namespace TBQuestGame.PresentationLayer
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
                     {
-                        TipsBox.Foreground = Brushes.Red;
-                        TipsBox.FontWeight = FontWeights.Bold;
-                        TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
-                        BossBattleStart();
-                        LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
-                        DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                        Location.disableControls(this);
+                        bossRoomEnterUpdate();
+
                     }
 
                 }

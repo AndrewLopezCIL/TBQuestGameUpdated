@@ -68,7 +68,7 @@ namespace TBQuestGame.PresentationLayer
         public double PlayerHealth
         {
             get { return _playerHealth; }
-            set { _playerHealth = value; }
+            set { _playerHealth = value; OnPropertyChanged(nameof(PlayerHealth)); }
         }
         public double PlayerShield
         {
