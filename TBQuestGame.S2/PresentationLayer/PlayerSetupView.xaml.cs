@@ -21,7 +21,7 @@ namespace TBQuestGame.PresentationLayer
     public partial class PlayerSetupView : Window
     {
         private Player _player;
-
+        
         public PlayerSetupView(Player player)
         {
             _player = player;
