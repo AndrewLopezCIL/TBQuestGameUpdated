@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using TBQuestGame.Models;
 using TBQuestGame.DataLayer;
 using TBQuestGame.PresentationLayer;
+using System.Collections.ObjectModel;
+
 namespace TBQuestGame.BusinessLayer
 {
    public class GameBusiness
@@ -15,6 +17,8 @@ namespace TBQuestGame.BusinessLayer
         List<string> _messages;
         Map _gameMap;
         Location _currentLocation;
+        //Bug was being thrown, this was the only fix in this class
+        ObservableCollection<Enemy> _currentEnemies= new ObservableCollection<Enemy>();
         PlayerSetupView _playerSetupView = null;
         bool _newPlayer = false;
          
@@ -61,11 +65,10 @@ namespace TBQuestGame.BusinessLayer
         private void InstantiateAndShowView()
         {
 
-            _gameSessionViewModel = new GameSessionViewModel(
-               _player,
+            _gameSessionViewModel = new GameSessionViewModel( _player,
                 GameData.InitialMessages(),
                 GameData.GameMap(),
-                GameData.InitialGameMapLocation()
+                GameData.InitialGameMapLocation(), _currentEnemies
                 );
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);
 

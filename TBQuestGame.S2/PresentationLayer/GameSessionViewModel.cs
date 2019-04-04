@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TBQuestGame.Models;
 using TBQuestGame.PresentationLayer;
+using TBQuestGame.DataLayer;
 namespace TBQuestGame.PresentationLayer
 {
     public class GameSessionViewModel : ObservableObject
@@ -16,10 +17,12 @@ namespace TBQuestGame.PresentationLayer
         private double _playerShield;
         private Map _gameMap;
         private Location _currentLocation;
+        GameData gameData = new GameData();
+        private int currentEnemyID;
         private string _currentLocationName;
         public ObservableCollection<Location> _accessibleLocations;
         public ObservableCollection<Enemy> _currentEnemies;
-
+        
         //
         // used to stop a reoccuring boss battle when user goes back to location
         //
@@ -28,14 +31,18 @@ namespace TBQuestGame.PresentationLayer
         public ObservableCollection<Enemy> CurrentEnemies
         {
             get { return _currentEnemies; }
-            set { _currentEnemies = value; OnPropertyChanged(nameof(CurrentEnemies)); }
+            set { _currentEnemies = value;  OnPropertyChanged(nameof(CurrentEnemies)); }
         }
         public int MissionLength
         {
             get { return _missionLength; }
             set { _missionLength = value; }
         }
-
+        public int CurrentEnemyID
+        {
+            get { return currentEnemyID; }
+            set { currentEnemyID = value; OnPropertyChanged(nameof(CurrentEnemyID)); }
+        }
         public ObservableCollection<Location> AccessibleLocations
         {
             get { return _accessibleLocations; }
@@ -99,13 +106,13 @@ namespace TBQuestGame.PresentationLayer
 
         }
 
-        public GameSessionViewModel(Player player, List<string>initialMessages, Map gameMap, GameMapCoordinates currentLocationCoordinates, Enemy currentEnemies)
+        public GameSessionViewModel(Player player, List<string>initialMessages, Map gameMap, GameMapCoordinates currentLocationCoordinates, ObservableCollection<Enemy> currentEnemies)
         {
             _playerShield = player.Shield;
             _playerHealth = player.Health;
 
-
-            _currentEnemies = currentEnemies.attackingEnemies;
+            currentEnemyID = gameData.currentEnemyID;
+            _currentEnemies = currentEnemies;
             _player = player;
             _messages = initialMessages;
             _gameMap = gameMap;

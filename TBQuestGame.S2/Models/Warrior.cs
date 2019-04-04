@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TBQuestGame.PresentationLayer;
 namespace TBQuestGame.Models
 {
     public class Warrior : Enemy
     { 
-        private int _level = 34;
+        private int _level = 35;
         private string _imageString;
         private int health = 125;
         
@@ -22,12 +22,18 @@ namespace TBQuestGame.Models
         {
 
         }
-        public Warrior(double passedhealth, int passedlevel)
+        public Warrior(bool isBoss, GameSessionViewModel _gameSessionViewModel)
         {
             this.Health = health;
             this.Level = _level;
             this._imageString = "warrior-icon.png";
-
+            this.Name = "Warrior";
+            _gameSessionViewModel.CurrentEnemyID += 1;
+            this.ID = _gameSessionViewModel.CurrentEnemyID;
+            //
+            // if passed isBoss bool value is true, then set the property to true, otherwise set the property to false
+            //
+            isBoss = true ? IsBoss = isBoss : IsBoss = isBoss;
         }
     }
 }

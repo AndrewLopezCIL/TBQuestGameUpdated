@@ -22,10 +22,11 @@ namespace TBQuestGame.Models
         private int _listPlacement;
         public int currentID = 0;
         private int _id;
+        private bool _isBoss;
         //
         // Contains all of the enemie objects the player is currently fighting
         //
-        public ObservableCollection<Enemy> attackingEnemies = new ObservableCollection<Enemy>();
+        public static ObservableCollection<Enemy> attackingEnemies = new ObservableCollection<Enemy>();
 
         
 
@@ -41,6 +42,11 @@ namespace TBQuestGame.Models
         {
             get { return _id; }
             set { _id = value; }
+        }
+        public bool IsBoss
+        {
+            get { return _isBoss; }
+            set { _isBoss = value; }
         }
         public double Health
         {

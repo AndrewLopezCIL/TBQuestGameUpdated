@@ -8,6 +8,7 @@ namespace TBQuestGame.DataLayer
 {
     public class GameData
     {
+        public int currentEnemyID = 0;
         public static Player PlayerData()
         {
             return new Player()

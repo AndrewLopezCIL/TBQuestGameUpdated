@@ -85,14 +85,16 @@ namespace TBQuestGame.PresentationLayer
             switch (enemyName.ToLower())
             {
                 case "warrior":
-                    Warrior warrior = new Warrior();
+                    Warrior warrior = new Warrior(true,_gameSessionViewModel);
                     _gameSessionViewModel.CurrentEnemies.Add(warrior);
                     nameOfEnemy = "Warrior";
-                    levelOfEnemy = "{LVL 34}";
+                    levelOfEnemy = "{LVL " + warrior.Level + " }";
                     enemyPicturePath = warrior.Image;
                     warrior.listPlacement = getPlacementID(warrior);
                     break;
                 case "warrior-black":
+                    //Warrior warrior = new Warrior(125.00,35,true,_gameSessionViewModel);
+                   // _gameSessionViewModel.CurrentEnemies.Add(warrior);
                     nameOfEnemy = "Black Knight";
                     levelOfEnemy = "{LVL 55}";
                     enemyPicturePath = "warrior-black.png";
@@ -186,7 +188,7 @@ namespace TBQuestGame.PresentationLayer
                     _gameSessionViewModel.bossesDefeated.Add(_gameSessionViewModel.GameMap.CurrentLocation);
                     break;
                 case "Vickren Dungeon":
-                   AddEnemyToList("warrior-black");
+                   AddEnemyToList("warrior");
                     _gameSessionViewModel.bossesDefeated.Add(_gameSessionViewModel.GameMap.CurrentLocation);
                     break;
                 case "Kardon Dungeon":
