@@ -7,7 +7,7 @@ using TBQuestGame.PresentationLayer;
 
 namespace TBQuestGame.Models
 {
-   public class Location
+   public class Location : ObservableObject
     {
         private int _Id;
 
@@ -42,7 +42,24 @@ namespace TBQuestGame.Models
             set { _fightChance = value; }
         }
 
-
+        private bool _multiAttackLocation;
+        public bool MultiAttackLocation
+        {
+            get { return _multiAttackLocation; }
+            set
+            {
+                _multiAttackLocation = value; OnPropertyChanged(nameof(MultiAttackLocation));
+            }
+        }
+        private string _locationWarningImages;
+        public string LocationWarningImage
+        {
+            get { return _locationWarningImages; }
+            set
+            {
+                _locationWarningImages = value;
+            }
+        }
         public string Description
         {
             get { return _description; }

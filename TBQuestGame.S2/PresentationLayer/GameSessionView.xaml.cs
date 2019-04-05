@@ -94,10 +94,13 @@ namespace TBQuestGame.PresentationLayer
                     break;
                 case "warrior-black":
                     //Warrior warrior = new Warrior(125.00,35,true,_gameSessionViewModel);
-                   // _gameSessionViewModel.CurrentEnemies.Add(warrior);
-                    nameOfEnemy = "Black Knight";
-                    levelOfEnemy = "{LVL 55}";
-                    enemyPicturePath = "warrior-black.png";
+                    // _gameSessionViewModel.CurrentEnemies.Add(warrior);
+                    BlackKnight blackKnight = new BlackKnight(false, _gameSessionViewModel);
+                    _gameSessionViewModel.CurrentEnemies.Add(blackKnight);
+                    nameOfEnemy = blackKnight.Name;
+                    levelOfEnemy = "{LVL " + blackKnight.Level + " }";
+                    enemyPicturePath = blackKnight.Image;
+                    blackKnight.listPlacement = getPlacementID(blackKnight);
                     break;
                 case "bandit":
                     nameOfEnemy = "Bandit";
@@ -163,9 +166,9 @@ namespace TBQuestGame.PresentationLayer
             item.BorderBrush = Brushes.Black;
             item.BorderThickness = new Thickness(3, 3, 3, 0);
 
-            ActiveEnemies.Items.Add(item);
-
-             
+            ActiveEnemies.Items.Add(item); 
+            
+              
             BitmapImage playerBitImage = new BitmapImage();
             playerBitImage.BeginInit();
 
@@ -199,6 +202,7 @@ namespace TBQuestGame.PresentationLayer
                     break;
             }
         }
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //

@@ -4,31 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBQuestGame.PresentationLayer;
+
 namespace TBQuestGame.Models
 {
-    public class Warrior : Enemy
-    { 
-        private int _level = 35;
+    public class BlackKnight : Enemy
+    {
+        private int _level = 45;
         private string _imageString;
-        private int health = 125;
-        
+        private int health = 145;
+
         public string Image
         {
             get { return _imageString; }
             set { _imageString = value; }
         }
-       
-        public Warrior()
+
+        public BlackKnight()
         {
 
         }
-        public Warrior(bool isBoss, GameSessionViewModel _gameSessionViewModel)
+        public BlackKnight(bool isBoss, GameSessionViewModel _gameSessionViewModel)
         {
             this.Health = health;
             this.Level = _level;
-            this._imageString = "warrior-icon.png";
-            this.Name = "Warrior";
-            this.BaseAttack = this.BaseAttack += (this.Level / 100) + .75; 
+            this.BaseAttack = this.BaseAttack += (this.Level / 100) + .50;
+            this._imageString = "warrior-black.png";
+            this.Name = "Black Knight";
             _gameSessionViewModel.CurrentEnemyID += 1;
             this.ID = _gameSessionViewModel.CurrentEnemyID;
             //

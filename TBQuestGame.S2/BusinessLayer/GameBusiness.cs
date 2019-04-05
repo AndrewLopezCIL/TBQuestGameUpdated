@@ -17,6 +17,7 @@ namespace TBQuestGame.BusinessLayer
         List<string> _messages;
         Map _gameMap;
         Location _currentLocation;
+        GameData gameData;
         //Bug was being thrown, this was the only fix in this class
         ObservableCollection<Enemy> _currentEnemies= new ObservableCollection<Enemy>();
         PlayerSetupView _playerSetupView = null;

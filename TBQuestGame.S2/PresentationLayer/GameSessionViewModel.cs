@@ -15,9 +15,11 @@ namespace TBQuestGame.PresentationLayer
         private Player _player;
         private double _playerHealth;
         private double _playerShield;
+        private string _locationWarningImages;
         private Map _gameMap;
         private Location _currentLocation;
-        GameData gameData = new GameData();
+        private bool _multiAttackLocation;
+        GameData _gameData = new GameData();
         private int currentEnemyID;
         private string _currentLocationName;
         public ObservableCollection<Location> _accessibleLocations;
@@ -60,8 +62,13 @@ namespace TBQuestGame.PresentationLayer
             get { return _currentLocation; }
             set { _currentLocation = value; OnPropertyChanged(nameof(CurrentLocation)); }
         }
-
-         
+          /*
+           * THIS WILL BE USED FOR DISPLAYING WARNING IMAGE NEXT TO MAP BUTTON
+        public string LocationWarningImage
+        {
+            get { return _locationWarningImages; }
+        }
+        */
         private List<string> _messages;
         #endregion
 
@@ -75,6 +82,12 @@ namespace TBQuestGame.PresentationLayer
         {
             get { return _player; }
             set { _player = value; }
+        }
+        private bool _enemySelected;
+        public bool EnemySelected
+        {
+            get { return _enemySelected; }
+            set { _enemySelected = value; OnPropertyChanged(nameof(EnemySelected)); }
         }
 
         /// <summary>
@@ -109,16 +122,15 @@ namespace TBQuestGame.PresentationLayer
         public GameSessionViewModel(Player player, List<string>initialMessages, Map gameMap, GameMapCoordinates currentLocationCoordinates, ObservableCollection<Enemy> currentEnemies)
         {
             _playerShield = player.Shield;
-            _playerHealth = player.Health;
-
-            currentEnemyID = gameData.currentEnemyID;
+            _playerHealth = player.Health;  
+            currentEnemyID = _gameData.currentEnemyID;
             _currentEnemies = currentEnemies;
             _player = player;
             _messages = initialMessages;
             _gameMap = gameMap;
             _gameMap.CurrentLocationCoordinates = currentLocationCoordinates;
-            _currentLocation = _gameMap.CurrentLocation; 
-
+            _currentLocation = _gameMap.CurrentLocation;
+            _locationWarningImages = _gameMap.CurrentLocation.LocationWarningImage;
         }
         
         #endregion

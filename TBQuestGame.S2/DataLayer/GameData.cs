@@ -59,6 +59,7 @@ namespace TBQuestGame.DataLayer
                 Accessible = true,
                 BossFightRoom = false,
                 ChanceOfFight = true,
+                MultiAttackLocation = false,
                 LocationMessage = "You look around to see your village\n overran by a group of bandits...\n" +
                 "Where do you decide to run?"
             };
@@ -70,6 +71,7 @@ namespace TBQuestGame.DataLayer
                 Accessible = true,
                 BossFightRoom = false,
                 ChanceOfFight = true,
+                MultiAttackLocation = false,
                 LocationMessage = "You're in the Dark Forest and run into a monster!" + 
                 "It starts attacking you!"
 
@@ -80,9 +82,10 @@ namespace TBQuestGame.DataLayer
                 Id = 3,
                 Name = "Vickren Dungeon",
                 Description = "Vickren Dungeon is where the Black Knight resides... [ BOSS ROOM ]",
-                Accessible = true, 
+                Accessible = true,
                 ChanceOfFight = false,
                 BossFightRoom = true,
+                MultiAttackLocation = true,
                 LocationMessage = "This is the location message for the Vickren Dungeon..."
             };
             gameMap.MapLocations[1, 2] = new Location()
@@ -93,13 +96,15 @@ namespace TBQuestGame.DataLayer
                 Accessible = false,
                 ChanceOfFight = false,
                 BossFightRoom = true,
+                MultiAttackLocation = true,
                 LocationMessage = "This is the location message for Kardon Dungeon..."
-            }; 
+            };
             gameMap.MapLocations[2, 0] = new Location()
             {
                 Id = 5,
                 Name = "Rohand Village",
                 Description = "Rohand Village is home to the only humans left on the planet.",
+                MultiAttackLocation = false,
                 Accessible = false, BossFightRoom = false, ChanceOfFight = true, LocationMessage = "This is the location message for Rohand Village..." };
             gameMap.MapLocations[2, 1] = new Location()
             {
@@ -108,6 +113,7 @@ namespace TBQuestGame.DataLayer
                 Description = "The Dark Forest is home to many evil forces that try and wipe out humanity.", Accessible = true,
                 BossFightRoom = false,
                 ChanceOfFight = true,
+                MultiAttackLocation = true,
                 LocationMessage = "This is the location message for The Dark Forest..."
             }; 
             return gameMap;

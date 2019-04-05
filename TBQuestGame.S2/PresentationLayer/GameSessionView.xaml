@@ -59,13 +59,16 @@
         <TextBox x:Name="DialogueBox" Text="{Binding CurrentLocation.LocationMessage, Mode=OneWay}" IsReadOnly="True" Width="575" Style="{StaticResource CommandBoxStyle}" Margin="13,10,356,85" Grid.ColumnSpan="2"/>
         <Image x:Name="speakerIcon" Margin="395.303,10,260,83" Grid.Column="1"/>
         <Button x:Name="GameOptions" Content="Menu" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="0.479,0.735" Margin="0,10,0,0" Click="GameOptions_Click" Grid.Column="1"/>
-        <Button x:Name="OpenMap" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Right" Margin="0,64,0,54" Click="OpenMap_Click" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Margin="0,64,0,54" HorizontalAlignment="Right" Grid.Column="1">
+            <Image x:Name="WarningPicture" Source="{Binding LocationWarningImage}" Margin="0,-1,0,0" Width="60" Height="45"/>
+            <Button x:Name="OpenMap" Style="{StaticResource ButtonStyle}"  Click="OpenMap_Click" >
             <DockPanel>
                 <Image Source="/Images/MapIcon.png" Width="32" Height="32"/>
                 <ContentControl Content="Map" Margin="0,3,0,0"/>
             </DockPanel>
 
         </Button>
+        </StackPanel>
         <TextBox x:Name="TipsBox" Width="473" Style="{StaticResource CommandBoxStyle}" IsReadOnly="True" Margin="13,88,458,10" Grid.ColumnSpan="2"/>
         <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,230,0,0.4" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
@@ -179,7 +182,7 @@
 
             <Label x:Name="EnemiesList" Grid.Column="2" Content="List of Enemies" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="73.2,99,73.6,99.4"/>
 
-            <ListBox x:Name="ActiveEnemies" ItemsSource="{Binding Enemies}" BorderBrush="Black" BorderThickness="2" Grid.Column="2" Background="LightGray" Margin="0.2,30,-0.4,0.4" Grid.ColumnSpan="2">
+            <ListBox x:Name="ActiveEnemies" ItemsSource="{Binding Enemies}" BorderBrush="Black" BorderThickness="2" Grid.Column="2" Background="LightGray" Margin="0.2,30,-0.4,0.4" Grid.ColumnSpan="2" SelectedItem="{Binding EnemySelected}">
 
             </ListBox>
 
