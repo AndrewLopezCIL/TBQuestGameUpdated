@@ -56,11 +56,11 @@ namespace TBQuestGame.PresentationLayer
         private void SkillsButton_Click(object sender, RoutedEventArgs e)
         {
             AddEnemyToList("warrior-black");
-            AddEnemyToList("warrior");
-            AddEnemyToList("wizard");
-            AddEnemyToList("scuffedspider");
-            AddEnemyToList("mudcrawler");
-            AddEnemyToList("bandit");
+            //AddEnemyToList("warrior");
+            //AddEnemyToList("wizard");
+            //AddEnemyToList("scuffedspider");
+           // AddEnemyToList("mudcrawler");
+            //AddEnemyToList("bandit");
         }  
         public int getPlacementID(Enemy enemyPassed)
         {
@@ -85,7 +85,7 @@ namespace TBQuestGame.PresentationLayer
             switch (enemyName.ToLower())
             {
                 case "warrior":
-                    Warrior warrior = new Warrior(true,_gameSessionViewModel);
+                    Warrior warrior = new Warrior(true,_gameSessionViewModel, this);
                     _gameSessionViewModel.CurrentEnemies.Add(warrior);
                     nameOfEnemy = "Warrior";
                     levelOfEnemy = "{LVL " + warrior.Level + " }";
@@ -95,7 +95,7 @@ namespace TBQuestGame.PresentationLayer
                 case "warrior-black":
                     //Warrior warrior = new Warrior(125.00,35,true,_gameSessionViewModel);
                     // _gameSessionViewModel.CurrentEnemies.Add(warrior);
-                    BlackKnight blackKnight = new BlackKnight(false, _gameSessionViewModel);
+                    BlackKnight blackKnight = new BlackKnight(false, _gameSessionViewModel, this);
                     _gameSessionViewModel.CurrentEnemies.Add(blackKnight);
                     nameOfEnemy = blackKnight.Name;
                     levelOfEnemy = "{LVL " + blackKnight.Level + " }";
@@ -179,8 +179,7 @@ namespace TBQuestGame.PresentationLayer
         }
           private void AttackButton_Click(object sender, RoutedEventArgs e)
         {
-            _gameSessionViewModel.PlayerHealth -= 5; 
-            
+            _gameSessionViewModel.Player.AttackEnemy(_gameSessionViewModel, this,Player.AttackType.BasicAttack);   
         }
         public void BossBattleStart()
         {
@@ -202,12 +201,11 @@ namespace TBQuestGame.PresentationLayer
                     break;
             }
         }
-        
+        //
+        // NORTH BUTTON 
+        //
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //
-            // North Button
-            //
+        { 
             if (_gameSessionViewModel.GameMap.NorthLocation() != null)
             {
                 _gameSessionViewModel.GameMap.MoveNorth();
@@ -249,11 +247,11 @@ namespace TBQuestGame.PresentationLayer
             DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
             Location.disableControls(this);
         }
+        //
+        // EAST BUTTON
+        //
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //
-            // East Button
-            //
             if (_gameSessionViewModel.GameMap.EastLocation() != null) {
             _gameSessionViewModel.GameMap.MoveEast();
                 /*if (_gameSessionViewModel.GameMap.EastLocation().Accessible && !_gameSessionViewModel.AccessibleLocations.Contains(_gameSessionViewModel.GameMap.EastLocation()))
@@ -275,11 +273,11 @@ namespace TBQuestGame.PresentationLayer
             }
         }
 
+        //
+        // SOUTH BUTTON
+        //
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            //
-            // South Button
-            //
             if (_gameSessionViewModel.GameMap.SouthLocation() != null)
             {
             _gameSessionViewModel.GameMap.MoveSouth();
@@ -304,11 +302,11 @@ namespace TBQuestGame.PresentationLayer
             }
         }
 
+        //
+        // WEST BUTTON
+        //
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            //
-            // West Button
-            //
             if (_gameSessionViewModel.GameMap.WestLocation() != null)
             {
             _gameSessionViewModel.GameMap.MoveWest();
@@ -334,22 +332,41 @@ namespace TBQuestGame.PresentationLayer
             }
 
         }
+        //
+        // MAP WINDOW BUTTON
+        //
         private void OpenMap_Click(object sender, RoutedEventArgs e)
         {
             mapWindow.Visibility = Visibility.Visible;
         }
-
+        //
+        // EXIT BUTTON
+        //
         private void Close_Application(object sender, EventArgs e)
         {
             //If save game method is added, call it here.
             Environment.Exit(0);
         }
 
+        //
+        // PLAYER STATS BUTTON
+        //
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            //
-            //Stats Window Button
-            //
+
+        }
+        //
+        // ENEMY STATS BUTTON
+        //
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ActiveEnemies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = (ListBox)sender;
+            _gameSessionViewModel.SelectedEnemySetter(item.SelectedIndex);
 
         }
     }

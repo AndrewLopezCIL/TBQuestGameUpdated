@@ -22,8 +22,9 @@ namespace TBQuestGame.Models
         {
 
         }
-        public Warrior(bool isBoss, GameSessionViewModel _gameSessionViewModel)
+        public Warrior(bool isBoss, GameSessionViewModel _gameSessionViewModel, GameSessionView GSV) : base(_gameSessionViewModel, GSV)
         {
+            
             this.Health = health;
             this.Level = _level;
             this._imageString = "warrior-icon.png";

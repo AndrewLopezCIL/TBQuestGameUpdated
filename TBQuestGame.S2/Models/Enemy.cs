@@ -27,6 +27,7 @@ namespace TBQuestGame.Models
         private bool _isBoss;
         private bool _selectedToFight = false;
         GameSessionViewModel gameSessionViewModel;
+        GameSessionView gameSessionView;
        public DispatcherTimer attackTimer = new System.Windows.Threading.DispatcherTimer();
         //
         // Contains all of the enemie objects the player is currently fighting
@@ -68,6 +69,12 @@ namespace TBQuestGame.Models
             get { return _level; }
             set { _level = value; }
         }
+        private bool _isAlive;
+        public bool IsAlive
+        {
+            get { return _isAlive; }
+            set { _isAlive = value; }
+        }
         public double ItemDrop
         {
             get { return _itemDrop; }
@@ -102,12 +109,90 @@ namespace TBQuestGame.Models
             _criticalAttack = _baseAttack + (_baseAttack * .30);
             return _criticalAttack;
         }
+        //
+        // Updating the enemies' listPlacement to their actual current positions
+        // This should be called everytime an enemy is removed from the CurrentEnemies list
+        //
+        public void refreshAllEnemiesPositions()
+        {
+            for (int pos = 0; pos < gameSessionViewModel.CurrentEnemies.Count; pos++)
+            {
+                gameSessionViewModel.CurrentEnemies[pos].listPlacement = pos;
+            }
+        }
+        public int findEnemyWithPosition(int position)
+        {
+            refreshAllEnemiesPositions();
+            for (int epos = 0; epos < gameSessionViewModel.CurrentEnemies.Count; epos++)
+            {
+                if (gameSessionViewModel.CurrentEnemies[epos].listPlacement == position)
+                {
+                    position = gameSessionViewModel.CurrentEnemies[epos].listPlacement; 
+                }
+                else
+                {
+                    position = 0;
+                }
+            }
+                return position;
+        }
+        public bool Alive(GameSessionView gsv, GameSessionViewModel gsm, Enemy enemy)
+        {
+            foreach (Enemy I in gsm.CurrentEnemies)
+            {
+                if (gsm.CurrentFightingEnemyID == I.ID)
+                {
+                    enemy = I;
+                }
+            }
+            if (enemy.Health > 0)
+            {
+                enemy.IsAlive = true;
+            }
+            else if (enemy.Health <= 0)
+            {
+                enemy.Health = 0;
+                enemy.IsAlive = false;
+                // Remove from ActiveEnemies ListBox List (using listPlacement) The index position returned from currentEnemies
+                gsv.ActiveEnemies.Items.RemoveAt(listPlacement);
+
+                // Remove from currentEnemies list with placementID (Current index position in the list)
+                if (gsm.CurrentEnemies.Count > 0)
+                {
+                    //
+                    // After removing dead NPC, the currentFightingEnemyID is set to the next-in-line NPC
+                    //
+                    gsm.CurrentFightingEnemyID = gsm.CurrentEnemies[listPlacement].ID;
+                    //
+                    // Setting alive to true if it's the next enemy
+                    //
+                    if (gsm.CurrentEnemies[listPlacement].ID == gsm.CurrentFightingEnemyID)
+                    {
+                        gsm.CurrentEnemies[listPlacement].IsAlive = true;
+                        gsm.CurrentEnemies[listPlacement].Health = gsm.CurrentEnemies[listPlacement].Health;
+                    } 
+                    //
+                    // Removes the killed enemy from the list
+                    //
+                    gsm.CurrentEnemies.RemoveAt(listPlacement); 
+                }
+                else if(gsm.CurrentEnemies.Count<=0)
+                {
+                    gsm.CurrentEnemies.RemoveAt(listPlacement);
+                    gsv.AttackButton.IsEnabled = false;
+                }
+                // Updating the listPlacement to their actual current positions
+                refreshAllEnemiesPositions();
+            }
         
+            return IsAlive;
+        }
         public void startAttackingPlayer()
         {
             attackTimer.Tick += new EventHandler(AttackTimerTick);
             attackTimer.Interval = new TimeSpan(0, 0, 1);
             attackTimer.Start();
+           
         }
         public void stopAttackingPlayer()
         {
@@ -120,9 +205,10 @@ namespace TBQuestGame.Models
         {
 
         }
-        public Enemy(GameSessionViewModel _gameSessionViewModel)
+        public Enemy(GameSessionViewModel _gameSessionViewModel, GameSessionView _gameSessionView)
         {
             this.gameSessionViewModel = _gameSessionViewModel;
+            this.gameSessionView = _gameSessionView;
             if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation)
             {
 
@@ -140,7 +226,13 @@ namespace TBQuestGame.Models
 
         private void AttackTimerTick(object sender, EventArgs e)
         {
-             
+            if (gameSessionViewModel.Player.IsAlive == false || gameSessionViewModel.PlayerHealth <= 0)
+            {
+                attackTimer.Stop();
+            }
+            else
+            {
+
                 //
                 // If the player's shield is less than the base attack (can't withstand another hit)
                 // And the shield value is more than 0, then set the shield to 0 and take the difference from
@@ -177,9 +269,11 @@ namespace TBQuestGame.Models
                         {
                             gameSessionViewModel.PlayerHealth = 0;
                             gameSessionViewModel.Player.IsAlive = false;
+                            attackTimer.Stop();
                         }
                     }
-              
+
+                }
             }
         }
         #endregion

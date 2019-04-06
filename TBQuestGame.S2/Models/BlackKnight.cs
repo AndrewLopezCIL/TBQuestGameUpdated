@@ -11,7 +11,7 @@ namespace TBQuestGame.Models
     {
         private int _level = 45;
         private string _imageString;
-        private int health = 145;
+        private int health = 155;
 
         public string Image
         {
@@ -23,7 +23,7 @@ namespace TBQuestGame.Models
         {
 
         }
-        public BlackKnight(bool isBoss, GameSessionViewModel _gameSessionViewModel)
+        public BlackKnight(bool isBoss, GameSessionViewModel _gameSessionViewModel, GameSessionView GSV) : base(_gameSessionViewModel, GSV)
         {
             this.Health = health;
             this.Level = _level;
