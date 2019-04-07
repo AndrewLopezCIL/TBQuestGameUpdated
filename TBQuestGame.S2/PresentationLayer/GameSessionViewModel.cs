@@ -207,6 +207,7 @@ namespace TBQuestGame.PresentationLayer
                         SelectingEnemy = E;
                         if (E.SelectedToFight == false)
                         {
+                            E.AttackingPlayer = true;
                             E.startAttackingPlayer();
                             gsv.EnemyPicture.Source = E.PictureSource;
                             E.SelectedToFight = true;
@@ -221,6 +222,7 @@ namespace TBQuestGame.PresentationLayer
                     if (E.listPlacement != selected && E.SelectedToFight == true)
                     {
                     E.SelectedToFight = false;
+                        E.AttackingPlayer = false;
                         E.stopAttackingPlayer();
                     }
                     else

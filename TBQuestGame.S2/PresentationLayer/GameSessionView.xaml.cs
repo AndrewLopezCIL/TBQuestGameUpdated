@@ -99,13 +99,7 @@ namespace TBQuestGame.PresentationLayer
                     Warrior warrior = new Warrior(true,_gameSessionViewModel, this);
                     warrior.RemovedFromActiveEnemiesList = false;
                     _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
-                    if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation) {
-                        warrior.AttackingPlayer = true;
-                    }
-                    else if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation == false)
-                    {
-                        warrior.AttackingPlayer = false;
-                    }
+                    warrior.AttackingPlayer = true;
                     enemy = warrior;
                     _gameSessionViewModel.CurrentEnemies.Add(warrior);
                     nameOfEnemy = "Warrior";
@@ -119,14 +113,7 @@ namespace TBQuestGame.PresentationLayer
                     BlackKnight blackKnight = new BlackKnight(false, _gameSessionViewModel, this);
                     _gameSessionViewModel.CurrentEnemies.Add(blackKnight);
                     enemy = blackKnight;
-                    if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation)
-                    {
-                        blackKnight.AttackingPlayer = true;
-                    }
-                    else if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation == false)
-                    {
-                        blackKnight.AttackingPlayer = false;
-                    }
+                    blackKnight.AttackingPlayer = true; 
                     _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
                     nameOfEnemy = blackKnight.Name;
                     levelOfEnemy = "{LVL " + blackKnight.Level + " }";

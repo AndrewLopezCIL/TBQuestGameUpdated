@@ -102,7 +102,13 @@ namespace TBQuestGame.Models
         {
             get { return _attacking; }
             set { _attacking = value; }
-        } 
+        }
+        private bool _attackMethodRunning; 
+        public bool AttackMethodRunning
+        {
+            get { return _attackMethodRunning; }
+            set { _attackMethodRunning = value; }
+        }
         public bool SelectedToFight
         {
             get { return _selectedToFight; }
@@ -191,14 +197,40 @@ namespace TBQuestGame.Models
                         gsm.CurrentEnemies.RemoveAt(listPlacement);
                         enemy.RemovedFromActiveEnemiesList = true;
                         gsm.EnemySelected = false;
-                        // gsv.ActiveEnemies.SelectedItem = listPlacement; 
-                        gsm.EnemySelected = true;
+                        //
+                        // Only enemies that are alive are in the list at this point
+                        //
+                        gsv.ActiveEnemies.SelectedItem = listPlacement;
+                        //
+                        // If there is another enemy next-in-line and the previous has been slain, then make the
+                        // current enemy the next-in-line
+                        //
+                        if (gsm.CurrentEnemies.Count > 0) {
+                            // Setting the current attacking enemy in the player's class to the next-in-line enemy
+                            gsm.Player.currentlyAttacking = gsm.CurrentEnemies[listPlacement]; 
+                            // Setting the enemy picture in the view to the next-in-line enemy's PictureSource property
+                            gsv.EnemyPicture.Source = gsm.CurrentEnemies[listPlacement].PictureSource;
+                            // Setting the next-in-line enemy's SelectedToFight property to true
+                            gsm.CurrentEnemies[listPlacement].SelectedToFight = true;
+                            // Setting the GameSessionviewModel's CurrentFightingEnemyID property to equal the next-in-line enemy's ID
+                            gsm.CurrentFightingEnemyID = gsm.CurrentEnemies[listPlacement].ID;
+                            // Refreshing/Resetting all enemies in the list's listPlacement positions
+                            refreshAllEnemiesPositions();
+                            // CurrentFightingEnemyListPlacement is set to the next-in-line enemy's listPlacement property/position
+                            gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[listPlacement].listPlacement;
+                             
+                            gsm.EnemySelected = true; 
 
+                        }
                     }
                     else if (gsm.CurrentEnemies.Count <= 0)
                     {
                         gsm.CurrentEnemies.RemoveAt(listPlacement);
                         gsv.AttackButton.IsEnabled = false;
+                    }
+                    if (gsm.CurrentEnemies.Count <= 0)
+                    {
+                        gsv.EnemyPicture.Source = null;
                     }
                     // Updating the listPlacement to their actual current positions
                     refreshAllEnemiesPositions();
@@ -208,15 +240,17 @@ namespace TBQuestGame.Models
         }
         public void startAttackingPlayer()
         {
-            if (AttackingPlayer == false && gameSessionViewModel.Player.currentlyAttacking == this) {
+            if (AttackingPlayer == true && this.AttackMethodRunning == false) {
                 attackTimer.Tick += new EventHandler(AttackTimerTick);
                 attackTimer.Interval = new TimeSpan(0, 0, 1);
-                attackTimer.Start();
+                attackTimer.Start(); 
+                this.AttackMethodRunning = true;
             } 
         }
         public void stopAttackingPlayer()
         {
             attackTimer.Stop();
+            this.AttackMethodRunning = false;
         }
         #endregion
 
@@ -302,7 +336,6 @@ namespace TBQuestGame.Models
                             attackTimer.Stop();
                         }
                     }
-
                 }
             }
         }
