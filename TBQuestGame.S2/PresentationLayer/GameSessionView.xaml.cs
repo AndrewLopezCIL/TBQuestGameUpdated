@@ -28,7 +28,9 @@ namespace TBQuestGame.PresentationLayer
         private string Messages; 
         private double PlayerHealth;
         MapDisplay mapWindow = new MapDisplay();
-        GameMenuDisplay menuWindow = new GameMenuDisplay(); 
+        EnemyStats enemyStatsWindow = new EnemyStats();
+        GameMenuDisplay menuWindow = new GameMenuDisplay();
+        InventoryDisplay inventoryWindow = new InventoryDisplay();
         public GameSessionView(GameSessionViewModel gameSessionViewModel)
         {
             _gameSessionViewModel = gameSessionViewModel;
@@ -50,7 +52,7 @@ namespace TBQuestGame.PresentationLayer
 
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
-
+            inventoryWindow.Visibility = Visibility.Visible;
         }
 
         private void SkillsButton_Click(object sender, RoutedEventArgs e)
@@ -76,31 +78,62 @@ namespace TBQuestGame.PresentationLayer
             }
                return id;
             } 
-       
+       public BitmapImage getPictureSource(string picturePath)
+        {
+            BitmapImage bitImages = new BitmapImage();
+            bitImages.BeginInit();
+            bitImages.UriSource = new Uri("/Images/" + picturePath, UriKind.Relative);
+            bitImages.EndInit(); 
+
+            return bitImages;
+        }
         public void AddEnemyToList(string enemyName)
         {
             string nameOfEnemy ="";
             string levelOfEnemy ="";
             string enemyPicturePath = "";
+            Enemy enemy;
             switch (enemyName.ToLower())
             {
                 case "warrior":
                     Warrior warrior = new Warrior(true,_gameSessionViewModel, this);
+                    warrior.RemovedFromActiveEnemiesList = false;
+                    _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
+                    if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation) {
+                        warrior.AttackingPlayer = true;
+                    }
+                    else if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation == false)
+                    {
+                        warrior.AttackingPlayer = false;
+                    }
+                    enemy = warrior;
                     _gameSessionViewModel.CurrentEnemies.Add(warrior);
                     nameOfEnemy = "Warrior";
                     levelOfEnemy = "{LVL " + warrior.Level + " }";
                     enemyPicturePath = warrior.Image;
-                    warrior.listPlacement = getPlacementID(warrior);
+                    warrior.listPlacement = getPlacementID(warrior); 
+                    warrior.PictureSource = getPictureSource(enemyPicturePath);
                     break;
                 case "warrior-black":
-                    //Warrior warrior = new Warrior(125.00,35,true,_gameSessionViewModel);
-                    // _gameSessionViewModel.CurrentEnemies.Add(warrior);
+            
                     BlackKnight blackKnight = new BlackKnight(false, _gameSessionViewModel, this);
                     _gameSessionViewModel.CurrentEnemies.Add(blackKnight);
+                    enemy = blackKnight;
+                    if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation)
+                    {
+                        blackKnight.AttackingPlayer = true;
+                    }
+                    else if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation == false)
+                    {
+                        blackKnight.AttackingPlayer = false;
+                    }
+                    _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
                     nameOfEnemy = blackKnight.Name;
                     levelOfEnemy = "{LVL " + blackKnight.Level + " }";
                     enemyPicturePath = blackKnight.Image;
                     blackKnight.listPlacement = getPlacementID(blackKnight);
+                    blackKnight.PictureSource = getPictureSource(enemyPicturePath);
+
                     break;
                 case "bandit":
                     nameOfEnemy = "Bandit";
@@ -140,9 +173,10 @@ namespace TBQuestGame.PresentationLayer
             //
             // Flip image
             //
+
             
             EnemyPicture.Source = bitImage;
-            
+
             img.Width = 32;
             img.Height = 32;
 
@@ -360,14 +394,13 @@ namespace TBQuestGame.PresentationLayer
         //
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
-
+            enemyStatsWindow.Visibility = Visibility.Visible;
         }
 
         private void ActiveEnemies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = (ListBox)sender;
-            _gameSessionViewModel.SelectedEnemySetter(item.SelectedIndex);
-
+            _gameSessionViewModel.SelectedEnemySetter(item.SelectedIndex, this);
         }
     }
 }

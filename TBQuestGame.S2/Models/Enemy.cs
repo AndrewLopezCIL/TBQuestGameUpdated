@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Threading;
 using TBQuestGame.PresentationLayer;
 
@@ -85,6 +86,12 @@ namespace TBQuestGame.Models
             get { return _baseAttack; }
             set { _baseAttack = value; }
         }
+        private ImageSource img;
+        public ImageSource PictureSource
+        {
+            get { return img; }
+            set { img = value; }
+        }
         public int listPlacement
         {
             get { return _listPlacement; }
@@ -100,6 +107,12 @@ namespace TBQuestGame.Models
         {
             get { return _selectedToFight; }
             set { _selectedToFight = value; OnPropertyChanged(nameof(SelectedToFight)); }
+        }
+        private bool removedFromActiveEnemiesList;
+        public bool RemovedFromActiveEnemiesList
+        {
+            get { return removedFromActiveEnemiesList; }
+            set { removedFromActiveEnemiesList = value; }
         }
         #endregion
 
@@ -138,61 +151,68 @@ namespace TBQuestGame.Models
         }
         public bool Alive(GameSessionView gsv, GameSessionViewModel gsm, Enemy enemy)
         {
-            foreach (Enemy I in gsm.CurrentEnemies)
+            if (enemy.RemovedFromActiveEnemiesList == false)
             {
-                if (gsm.CurrentFightingEnemyID == I.ID)
+                if (enemy.Health > 0)
                 {
-                    enemy = I;
+                    enemy.IsAlive = true;
                 }
-            }
-            if (enemy.Health > 0)
-            {
-                enemy.IsAlive = true;
-            }
-            else if (enemy.Health <= 0)
-            {
-                enemy.Health = 0;
-                enemy.IsAlive = false;
-                // Remove from ActiveEnemies ListBox List (using listPlacement) The index position returned from currentEnemies
-                gsv.ActiveEnemies.Items.RemoveAt(listPlacement);
-
-                // Remove from currentEnemies list with placementID (Current index position in the list)
-                if (gsm.CurrentEnemies.Count > 0)
+                else if (enemy.Health <= 0)
                 {
-                    //
-                    // After removing dead NPC, the currentFightingEnemyID is set to the next-in-line NPC
-                    //
-                    gsm.CurrentFightingEnemyID = gsm.CurrentEnemies[listPlacement].ID;
-                    //
-                    // Setting alive to true if it's the next enemy
-                    //
-                    if (gsm.CurrentEnemies[listPlacement].ID == gsm.CurrentFightingEnemyID)
+                    enemy.Health = 0;
+                    enemy.IsAlive = false;
+                    if (enemy.SelectedToFight == true)
                     {
-                        gsm.CurrentEnemies[listPlacement].IsAlive = true;
-                        gsm.CurrentEnemies[listPlacement].Health = gsm.CurrentEnemies[listPlacement].Health;
-                    } 
-                    //
-                    // Removes the killed enemy from the list
-                    //
-                    gsm.CurrentEnemies.RemoveAt(listPlacement); 
+                        enemy.stopAttackingPlayer();
+                    }
+                    // Remove from ActiveEnemies ListBox List (using listPlacement) The index position returned from currentEnemies
+
+                    gsv.ActiveEnemies.Items.RemoveAt(listPlacement);
+
+                    // Remove from currentEnemies list with placementID (Current index position in the list)
+                    if (gsm.CurrentEnemies.Count > 0)
+                    {
+                        //
+                        // After removing dead NPC, the currentFightingEnemyID is set to the next-in-line NPC
+                        //
+                        gsm.CurrentFightingEnemyID = gsm.CurrentEnemies[listPlacement].ID;
+                        //
+                        // Setting alive to true if it's the next enemy
+                        //
+                        if (gsm.CurrentEnemies[listPlacement].ID == gsm.CurrentFightingEnemyID)
+                        {
+                            gsm.CurrentEnemies[listPlacement].IsAlive = true;
+                            gsm.CurrentEnemies[listPlacement].Health = gsm.CurrentEnemies[listPlacement].Health;
+                        }
+                        //
+                        // Removes the killed enemy from the list
+                        //
+
+                        gsm.CurrentEnemies.RemoveAt(listPlacement);
+                        enemy.RemovedFromActiveEnemiesList = true;
+                        gsm.EnemySelected = false;
+                        // gsv.ActiveEnemies.SelectedItem = listPlacement; 
+                        gsm.EnemySelected = true;
+
+                    }
+                    else if (gsm.CurrentEnemies.Count <= 0)
+                    {
+                        gsm.CurrentEnemies.RemoveAt(listPlacement);
+                        gsv.AttackButton.IsEnabled = false;
+                    }
+                    // Updating the listPlacement to their actual current positions
+                    refreshAllEnemiesPositions();
                 }
-                else if(gsm.CurrentEnemies.Count<=0)
-                {
-                    gsm.CurrentEnemies.RemoveAt(listPlacement);
-                    gsv.AttackButton.IsEnabled = false;
-                }
-                // Updating the listPlacement to their actual current positions
-                refreshAllEnemiesPositions();
             }
-        
             return IsAlive;
         }
         public void startAttackingPlayer()
         {
-            attackTimer.Tick += new EventHandler(AttackTimerTick);
-            attackTimer.Interval = new TimeSpan(0, 0, 1);
-            attackTimer.Start();
-           
+            if (AttackingPlayer == false && gameSessionViewModel.Player.currentlyAttacking == this) {
+                attackTimer.Tick += new EventHandler(AttackTimerTick);
+                attackTimer.Interval = new TimeSpan(0, 0, 1);
+                attackTimer.Start();
+            } 
         }
         public void stopAttackingPlayer()
         {
@@ -209,19 +229,29 @@ namespace TBQuestGame.Models
         {
             this.gameSessionViewModel = _gameSessionViewModel;
             this.gameSessionView = _gameSessionView;
-            if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation)
-            {
+            //
+            // When switching between enemies, it starts each timer and never stops, so the damage being done
+            // to player keeps piling on and soon the player gets one-tapped
+            //
 
+
+            /*
+            if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation && _gameSessionViewModel.Player.currentlyAttacking.AttackingPlayer == false)
+            {
+                
                 startAttackingPlayer();
+                AttackingPlayer = true;
             }
-            else if (SelectedToFight == true)
+            else if (SelectedToFight == true && AttackingPlayer == false)
+            {
+                AttackingPlayer = true;
+                startAttackingPlayer();
+            }*/
+
+            /*if (AttackingPlayer == true)
             {
                 startAttackingPlayer();
-            }
-            if (AttackingPlayer == true)
-            {
-                startAttackingPlayer();
-            }
+            }*/
         }
 
         private void AttackTimerTick(object sender, EventArgs e)

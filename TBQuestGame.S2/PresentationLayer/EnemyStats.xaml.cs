@@ -15,25 +15,20 @@ using System.Windows.Shapes;
 namespace TBQuestGame
 {
     /// <summary>
-    /// Interaction logic for GameMenuDisplay.xaml
+    /// Interaction logic for EnemyStats.xaml
     /// </summary>
-    public partial class GameMenuDisplay : Window
+    public partial class EnemyStats : Window
     {
-        public GameMenuDisplay()
+        public EnemyStats()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-        private void Closing_Window(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Visibility = Visibility.Hidden;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
         }
     }
 }

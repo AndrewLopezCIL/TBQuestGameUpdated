@@ -192,19 +192,42 @@ namespace TBQuestGame.PresentationLayer
         #endregion
 
         #region METHODS 
-        public void SelectedEnemySetter(int selected)
+        public void SelectedEnemySetter(int selected, GameSessionView gsv)
         {
-            selected += 1;
+            EnemySelected = true;  
             foreach (Enemy E in CurrentEnemies)
             {
-                
-                if (E.ID == selected)
+
+                E.refreshAllEnemiesPositions();
+                if (E.listPlacement == selected)
+                { 
+                        CurrentFightingEnemyID = E.ID;
+                        CurrentFightingEnemyListPlacement = E.listPlacement;
+                        Player.currentlyAttacking = E;
+                        SelectingEnemy = E;
+                        if (E.SelectedToFight == false)
+                        {
+                            E.startAttackingPlayer();
+                            gsv.EnemyPicture.Source = E.PictureSource;
+                            E.SelectedToFight = true;
+                        }
+                        else
+                        {
+                            E.SelectedToFight = true;
+                        }
+                 }
+                else if (E.listPlacement != selected)
                 {
-                    CurrentFightingEnemyID = E.ID; 
-                    CurrentFightingEnemyListPlacement = E.listPlacement;
-                    Player.currentlyAttacking = E;
-                    SelectingEnemy = E;
-                } 
+                    if (E.listPlacement != selected && E.SelectedToFight == true)
+                    {
+                    E.SelectedToFight = false;
+                        E.stopAttackingPlayer();
+                    }
+                    else
+                    {
+                        E.SelectedToFight = false;
+                    } 
+                }
             } 
         }
         #endregion

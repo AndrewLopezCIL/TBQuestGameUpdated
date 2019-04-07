@@ -15,10 +15,10 @@ namespace TBQuestGame.DataLayer
             {
                 Id = 1,
                 Name = "Player",
-                BasicAttack = 75.0,
+                BasicAttack = 3.2,
                 Gold = 0,
                 Health = 100,
-                Shield = 0,
+                Shield = 35,
                 IsAlive = true,
                 LocationId = 0,
                 QuestPoints = 0,

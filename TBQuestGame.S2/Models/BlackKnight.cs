@@ -27,6 +27,7 @@ namespace TBQuestGame.Models
         {
             this.Health = health;
             this.Level = _level;
+            this.IsAlive = true;
             this.BaseAttack = this.BaseAttack += (this.Level / 100) + .50;
             this._imageString = "warrior-black.png";
             this.Name = "Black Knight";

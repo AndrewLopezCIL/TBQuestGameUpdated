@@ -16,6 +16,10 @@ namespace TBQuestGame.Models
         {
             Warrior, Archer, Mage
         }
+        public enum PlayerState
+        {
+            Fighting, Neutral
+        }
         #region FIELDS
         private double _shield;
         //private double _basicAttack = 3.2;
@@ -27,6 +31,7 @@ namespace TBQuestGame.Models
         private int _gold;
         private AttackType attackType;
         private ClassType classType;
+        private PlayerState _playerState;
         private Enemy _currentlyAttacking;
         // May remove quest points in the future
         private int _questPoints;
@@ -34,6 +39,12 @@ namespace TBQuestGame.Models
         #endregion
 
         #region PROPERTIES
+        public PlayerState PlayersCurrentState
+        {
+            get { return _playerState;  }
+            set { _playerState = value; }
+        }
+
         public AttackType AttackTypeProp
         {
             get { return attackType; }
@@ -127,7 +138,7 @@ namespace TBQuestGame.Models
         #endregion
 
         #region CONSTRUCTORS 
-       
+
         public void AttackEnemy(GameSessionViewModel gsm, GameSessionView GSV, AttackType typeOfAttack)
         {
             // setting fightingEnemy to the enemy with position in currentEnemies of 
@@ -136,8 +147,13 @@ namespace TBQuestGame.Models
             // Need to look for enemy with a specific listPlacement 
             Enemy fightingEnemy = currentlyAttacking;
             attackType = typeOfAttack;
-            //If current enemy is alive/has more than 0 health
-            fightingEnemy.Alive(GSV,gsm, fightingEnemy); 
+            //
+            // ADD IN, IF NOT SELECTED THEN AUTOMATICALLY ATTACK FIRST ENEMY IN LIST
+            //
+            if (gsm.CurrentEnemies.Count > 0) {
+                //If current enemy is alive/has more than 0 health
+                if (PlayersCurrentState == PlayerState.Fighting) {
+                     
             if (fightingEnemy.IsAlive == true)
             {
                 switch (attackType)
@@ -149,6 +165,7 @@ namespace TBQuestGame.Models
                         {
                             fightingEnemy.Health = 0;
                             fightingEnemy.Alive(GSV, gsm, fightingEnemy);
+                            fightingEnemy.stopAttackingPlayer();
                             GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
                         }
                         break;
@@ -157,7 +174,7 @@ namespace TBQuestGame.Models
                         if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
-                            fightingEnemy.Alive(GSV, gsm, fightingEnemy); 
+                            fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                         }
                         break;
                     case AttackType.SkillTwoAttack:
@@ -165,7 +182,7 @@ namespace TBQuestGame.Models
                         if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
-                            fightingEnemy.Alive(GSV, gsm, fightingEnemy); 
+                            fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                         }
                         break;
                     case AttackType.SkillThreeAttack:
@@ -173,19 +190,20 @@ namespace TBQuestGame.Models
                         if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
-                            fightingEnemy.Alive(GSV, gsm, fightingEnemy); 
+                            fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                         }
                         break;
                     case AttackType.ThirdEyeAttack:
-                 
 
-                        if (fightingEnemy.IsAlive == true) {
+
+                        if (fightingEnemy.IsAlive == true)
+                        {
                             fightingEnemy.Health -= ThirdEyeAttack;
                         }
-                            if (fightingEnemy.Health <= 0)
+                        if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
-                            fightingEnemy.Alive(GSV, gsm, fightingEnemy); 
+                            fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                         }
                         break;
                     default:
@@ -193,6 +211,7 @@ namespace TBQuestGame.Models
                 }
 
             }
+        }
             
         }
         #endregion
@@ -200,3 +219,4 @@ namespace TBQuestGame.Models
         
     }
 }
+    }

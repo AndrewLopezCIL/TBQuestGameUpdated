@@ -12,28 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TBQuestGame
+namespace TBQuestGame.PresentationLayer
 {
     /// <summary>
-    /// Interaction logic for GameMenuDisplay.xaml
+    /// Interaction logic for InventoryDisplay.xaml
     /// </summary>
-    public partial class GameMenuDisplay : Window
+    public partial class InventoryDisplay : Window
     {
-        public GameMenuDisplay()
+        public InventoryDisplay()
         {
             InitializeComponent();
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen; 
         }
 
-        private void Closing_Window(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Visibility = Visibility.Hidden;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
         }
     }
 }

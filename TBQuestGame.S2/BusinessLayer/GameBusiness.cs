@@ -20,7 +20,7 @@ namespace TBQuestGame.BusinessLayer
         GameData gameData;
         //Bug was being thrown, this was the only fix in this class
         ObservableCollection<Enemy> _currentEnemies= new ObservableCollection<Enemy>();
-        PlayerSetupView _playerSetupView = null;
+        //PlayerSetupView _playerSetupView = null;
         bool _newPlayer = false;
          
 
@@ -38,8 +38,8 @@ namespace TBQuestGame.BusinessLayer
         {
             if (_newPlayer)
             {
-                _playerSetupView = new PlayerSetupView(_player);
-                _playerSetupView.ShowDialog();
+                //_playerSetupView = new PlayerSetupView(_player);
+               // _playerSetupView.ShowDialog();
 
                 //
                 // setup up game based player properties
