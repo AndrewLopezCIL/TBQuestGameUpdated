@@ -43,31 +43,40 @@
         
         <Label x:Name="PlayerNameLabel" Style="{StaticResource TextLabel}" Content="Name:" Grid.Row="0"/>
         <TextBox x:Name="PlayerName" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding Name}" Grid.Row="0"/>
-
+         
+        
         <Label x:Name="PlayerClassLabel" Style="{StaticResource TextLabel}" Content="Class:" Grid.Row="1"/>
         <TextBox x:Name="PlayerClass" Text="STILL WORKING ON IT"  IsReadOnly="True" Style="{StaticResource TextBoxValue}" Grid.Row="1"/>
  
+        
         <Label x:Name="PlayerXPLabel" Style="{StaticResource TextLabel}" Content="XP:" Grid.Row="2"/>
         <TextBox x:Name="PlayerXP" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerXP}" Grid.Row="2"/> 
+        
         
         <Label x:Name="PlayerLevelLabel" Style="{StaticResource TextLabel}" Content="Level:" Grid.Row="3"/>
         <TextBox x:Name="PlayerLevel" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerLevel}" Grid.Row="3"/> 
         
+        
         <Label x:Name="PlayerGoldLabel" Style="{StaticResource TextLabel}" Content="Gold:" Grid.Row="4"/>
         <TextBox x:Name="PlayerGold" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerGold}" Grid.Row="4"/>
 
+        
         <Label x:Name="BaseDamageLabel" Style="{StaticResource TextLabel}" Content="Base DMG:" Grid.Row="5" Padding="10" FontSize="14"/>
         <TextBox x:Name="BaseDamage" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerBaseAttack}" Grid.Row="5"/>
 
+        
         <Label x:Name="SkillOneDamageLabel" Style="{StaticResource TextLabel}" Content="Skill 1 DMG:" Grid.Row="6" Padding="5" FontSize="14"/>
         <TextBox x:Name="SkillOneDamage" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerSkillOne}" Grid.Row="6"/>
 
+        
         <Label x:Name="SkillTwoDamageLabel" Style="{StaticResource TextLabel}" Content="Skill 2 DMG:" Grid.Row="7" Padding="5" FontSize="14"/>
         <TextBox x:Name="SkillTwoDamage" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerSkillTwo}" Grid.Row="7"/>
 
+        
         <Label x:Name="SkillThreeDamageLabel" Style="{StaticResource TextLabel}" Content="Skill 3 DMG:" Grid.Row="8" Padding="5" FontSize="14"/>
         <TextBox x:Name="SkillThreeDamage" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerSkillThree}" Grid.Row="8"/>
 
+        
         <Label x:Name="ThirdEyeDamageLabel" Style="{StaticResource TextLabel}" Content="Third Eye DMG:" Grid.Row="9" Padding="0" FontSize="12"/>
         <TextBox x:Name="ThirdEyeDamage" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerThirdEye}" Grid.Row="9"/>
         <ProgressBar x:Name="PlayerXPBar"  Value="{Binding PlayerXP}" Foreground="GreenYellow" Background="Gold" Minimum="{Binding MinPlayerXP}" Maximum="{Binding MaxPlayerXP}" Width="350" Height="30" Grid.Row="10"/>

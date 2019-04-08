@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TBQuestGame"
         mc:Ignorable="d"
-        Title="GameMenuDisplay" Height="450" Width="350" Closing="Closing_Window">
+        Title="GameMenuDisplay" Height="450" Width="350" Closing="Closing_Window" Icon="/Images/help.png">
     <Window.Resources>
         <Style x:Key="Tags" TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
