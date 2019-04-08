@@ -28,7 +28,12 @@ namespace TBQuestGame.Models
             this.Health = health;
             this.Level = _level;
             this.IsAlive = true;
+            Random ran = new Random();
+            this.GoldDrop = ran.Next(10,19);
             this._imageString = "warrior-icon.png";
+            Random ranXPDrop = new Random();
+
+            this.XPDrop = ranXPDrop.Next(20,35);
             this.Name = "Warrior";
             this.BaseAttack = this.BaseAttack += (this.Level / 100) + .75; 
             _gameSessionViewModel.CurrentEnemyID += 1;

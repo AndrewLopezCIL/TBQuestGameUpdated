@@ -1,0 +1,46 @@
+﻿<Window x:Class="TBQuestGame.PresentationLayer.PlayerStatsDisplay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
+        mc:Ignorable="d"
+        Title="PlayerStatsDisplay" Height="450" Width="400" Closing="Window_Closing">
+    <Window.Resources>
+        <Style x:Key="TextLabel" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="15"/>
+        </Style>
+        <Style x:Key="TextBoxValue" TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0,5,0,0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Resources>
+    <Grid> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/> 
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="60*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="PlayerNameLabel" Style="{StaticResource TextLabel}" Content="Name:" Grid.Row="0"/>
+        <TextBox x:Name="PlayerName" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding Name}" Grid.Row="0"/>
+        <Label x:Name="PlayerXPLabel" Style="{StaticResource TextLabel}" Content="XP:" Grid.Row="1"/>
+        <TextBox x:Name="PlayerXP" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerXP}" Grid.Row="1"/> 
+        <Label x:Name="PlayerLevelLabel" Style="{StaticResource TextLabel}" Content="Level:" Grid.Row="2"/>
+        <TextBox x:Name="PlayerLevel" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerLevel}" Grid.Row="2"/> 
+        <Label x:Name="PlayerGoldLabel" Style="{StaticResource TextLabel}" Content="Gold:" Grid.Row="3"/>
+        <TextBox x:Name="PlayerGold" IsReadOnly="True" Style="{StaticResource TextBoxValue}" Text="{Binding PlayerGold}" Grid.Row="3"/>
+        <ProgressBar x:Name="PlayerXPBar" Value="{Binding PlayerXP}" Foreground="GreenYellow" Background="Gold" Minimum="{Binding MinPlayerXP}" Maximum="{Binding MaxPlayerXP}" Width="350" Height="30" Grid.Row="4"/>
+    </Grid>
+    
+</Window>

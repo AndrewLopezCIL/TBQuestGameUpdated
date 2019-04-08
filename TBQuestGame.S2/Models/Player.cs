@@ -28,17 +28,31 @@ namespace TBQuestGame.Models
         private double _skillTwoAttack;
         private double _skillThreeAttack;
         private double _thirdEyeAttack;
+        private int _playerLevel;
+        private double _playerXP;
         private int _gold;
         private AttackType attackType;
         private ClassType classType;
         private PlayerState _playerState;
         private Enemy _currentlyAttacking;
+        private double _maxLevelXPRange = 75.5;
+        private double _minLevelXPRange;
         // May remove quest points in the future
         private int _questPoints;
 
         #endregion
 
         #region PROPERTIES
+        public double MaxLevelXPRange
+        {
+            get { return Level * _maxLevelXPRange; } 
+        }
+        public double MinLevelXPRange
+        {
+            get { return _minLevelXPRange; }
+            set { _minLevelXPRange = value; }
+        }
+         
         public PlayerState PlayersCurrentState
         {
             get { return _playerState;  }
@@ -55,6 +69,12 @@ namespace TBQuestGame.Models
             get { return classType; }
             set { classType = value; }
         }
+        public int Level
+        {
+            get { return _playerLevel; }
+            set { _playerLevel = value; }
+        }
+
         public int QuestPoints
         {
             get { return _questPoints; }
@@ -65,6 +85,12 @@ namespace TBQuestGame.Models
             get { return _gold; }
             set { _gold = value; }
         }
+        public double XP
+        {
+            get { return _playerXP; }
+            set { _playerXP = value; }
+        }
+
         public double Shield
         {
             get{ return _shield; }
@@ -135,6 +161,16 @@ namespace TBQuestGame.Models
                     break;
             }
         }
+        public void playerLevelUp(GameSessionViewModel gsm, GameSessionView gsv)
+        {
+            gsm.PlayerLevel += 1; 
+            gsm.MinPlayerXP = gsm.Player.XP;
+            gsv.playerStatsWindow.PlayerXPBar.Value = gsm.PlayerXP;
+            gsv.playerStatsWindow.PlayerXPBar.Minimum = gsm.PlayerXP;
+            
+            gsv.playerStatsWindow.PlayerXPBar.Maximum = gsm.MaxPlayerXP;
+            
+        }
         #endregion
 
         #region CONSTRUCTORS 
@@ -167,6 +203,11 @@ namespace TBQuestGame.Models
                             fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                             fightingEnemy.stopAttackingPlayer();
                             GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
+                            fightingEnemy.onDeathRewardPlayer(gsm, fightingEnemy);
+                            if (gsm.PlayerXP >= gsm.MaxPlayerXP)
+                            {
+                                playerLevelUp(gsm,GSV);
+                            }
                         }
                         break;
                     case AttackType.SkillOneAttack:

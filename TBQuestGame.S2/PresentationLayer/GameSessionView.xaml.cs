@@ -27,10 +27,12 @@ namespace TBQuestGame.PresentationLayer
         
         private string Messages; 
         private double PlayerHealth;
-        MapDisplay mapWindow = new MapDisplay();
-        EnemyStats enemyStatsWindow = new EnemyStats();
-        GameMenuDisplay menuWindow = new GameMenuDisplay();
-        InventoryDisplay inventoryWindow = new InventoryDisplay();
+        public MapDisplay mapWindow = new MapDisplay();
+        public PlayerStatsDisplay playerStatsWindow;
+        public EnemyStats enemyStatsWindow = new EnemyStats();
+        public GameMenuDisplay menuWindow = new GameMenuDisplay();
+        public InventoryDisplay inventoryWindow = new InventoryDisplay();
+        
         public GameSessionView(GameSessionViewModel gameSessionViewModel)
         {
             _gameSessionViewModel = gameSessionViewModel;
@@ -40,8 +42,11 @@ namespace TBQuestGame.PresentationLayer
             PlayerHealth = _gameSessionViewModel.PlayerHealth;
             mapWindow.DataContext = gameSessionViewModel;
             menuWindow.DataContext = gameSessionViewModel;
+
             ActiveEnemies.DataContext = _gameSessionViewModel.CurrentEnemies;
             DataContext = gameSessionViewModel;
+            playerStatsWindow = new PlayerStatsDisplay(_gameSessionViewModel);
+            playerStatsWindow.DataContext = _gameSessionViewModel;
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
@@ -374,7 +379,7 @@ namespace TBQuestGame.PresentationLayer
         //
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-
+            playerStatsWindow.Visibility = Visibility.Visible;
         }
         //
         // ENEMY STATS BUTTON

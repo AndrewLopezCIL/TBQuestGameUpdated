@@ -14,7 +14,7 @@ namespace TBQuestGame.Models
     {
 
         #region FIELDS
- 
+        public enum EnemyType { Archer, Bandit, Wizard, MudCrawler, ScuffedSpider, BlackKnight, Warrior }
         private double _health;
         private double _baseAttack = 2.9;
         private double _criticalAttack;
@@ -27,6 +27,7 @@ namespace TBQuestGame.Models
         private int _id;
         private bool _isBoss;
         private bool _selectedToFight = false;
+        private EnemyType _typeOfEnemy;
         GameSessionViewModel gameSessionViewModel;
         GameSessionView gameSessionView;
        public DispatcherTimer attackTimer = new System.Windows.Threading.DispatcherTimer();
@@ -40,6 +41,11 @@ namespace TBQuestGame.Models
         #endregion
 
         #region PROPERTIES
+        public EnemyType TypeOfEnemy
+        {
+            get { return _typeOfEnemy; }
+            set { _typeOfEnemy = value; }
+        }
         public string Name
         {
             get { return _name; }
@@ -65,6 +71,12 @@ namespace TBQuestGame.Models
             get { return _xpDrop; }
             set { _xpDrop= value; }
         }
+        public int GoldDrop
+        {
+            get { return _goldDrop; }
+            set { _goldDrop = value; }
+        }
+
         public int Level
         {
             get { return _level; }
@@ -115,6 +127,8 @@ namespace TBQuestGame.Models
             set { _selectedToFight = value; OnPropertyChanged(nameof(SelectedToFight)); }
         }
         private bool removedFromActiveEnemiesList;
+        private int _goldDrop;
+
         public bool RemovedFromActiveEnemiesList
         {
             get { return removedFromActiveEnemiesList; }
@@ -238,14 +252,54 @@ namespace TBQuestGame.Models
             }
             return IsAlive;
         }
+        public void Rewarder(GameSessionViewModel gsm, Enemy enemy)
+        {
+            gsm.PlayerXP += enemy.XPDrop;
+            gsm.PlayerGold += enemy.GoldDrop;
+            //gsm.MinPlayerXP = gsm.Player.XP;
+
+            //gsm.MaxPlayerXP = gsm.Player.MaxLevelXPRange;
+        }
+        public void onDeathRewardPlayer(GameSessionViewModel gsm, Enemy enemy)
+        {
+            switch (enemy.TypeOfEnemy)
+            {
+                case EnemyType.Archer:
+                    Rewarder(gsm, enemy);
+                    break;
+                case EnemyType.Bandit:
+                    Rewarder(gsm, enemy);
+                    break;
+                case EnemyType.Wizard:
+                    Rewarder(gsm, enemy); 
+                    break;
+                case EnemyType.MudCrawler:
+                    Rewarder(gsm, enemy); 
+                    break;
+                case EnemyType.ScuffedSpider:
+                    Rewarder(gsm, enemy); 
+                    break;
+                case EnemyType.BlackKnight:
+                    Rewarder(gsm, enemy); 
+                    break;
+                case EnemyType.Warrior:
+                    Rewarder(gsm, enemy); 
+                    break;
+                default:
+                    break;
+            }
+
+        }
         public void startAttackingPlayer()
         {
+        
             if (AttackingPlayer == true && this.AttackMethodRunning == false) {
                 attackTimer.Tick += new EventHandler(AttackTimerTick);
                 attackTimer.Interval = new TimeSpan(0, 0, 1);
                 attackTimer.Start(); 
                 this.AttackMethodRunning = true;
             } 
+
         }
         public void stopAttackingPlayer()
         {

@@ -25,7 +25,7 @@ namespace TBQuestGame.PresentationLayer
         private string _locationWarningImages;
 
         // gameMap value for GameMap property
-        private Map _gameMap; 
+        private Map _gameMap;
 
         // current location value for CurrentLocation property
         private Location _currentLocation;
@@ -53,6 +53,82 @@ namespace TBQuestGame.PresentationLayer
         // Current enemy fighting's listplacement ID
         private int _currentFightingEnemyListPlacement;
 
+
+        // To Display Player's Name
+        private string _playerName;
+        // To Display Player's Level
+        private int _playerLevel;
+        // To Display Player's Gold
+        private int _playerGold;
+        // To Display Player's XP
+        private double _playerXP;
+        // To Display Player's Base Attack Damage
+        private double _playerBaseAttack;
+        // To Display Player's Skill One Damage
+        private double _playerSkillOne;
+        // To Display Player's Skill Two Damage
+        private double _playerSkillTwo;
+        // To Display Player's Skill Three Damage
+        private double _playerSkillThree;
+        // To Display Player's Third Eye Attack Damage
+        private double _playerThirdEye;
+
+        public int PlayerLevel
+        {
+            get { return Player.Level; }
+            set { Player.Level = value; OnPropertyChanged(nameof(PlayerLevel)); }
+        }
+        public int PlayerGold
+        {
+            get { return Player.Gold; }
+            set { Player.Gold = value; OnPropertyChanged(nameof(PlayerGold)); }
+        }
+        public double PlayerXP
+        {
+            get { return Player.XP; }
+            set { Player.XP = value; OnPropertyChanged(nameof(PlayerXP)); }
+        }
+        public double PlayerBaseAttack
+        {
+            get { return _playerBaseAttack; }
+            set { _playerBaseAttack = value; OnPropertyChanged(nameof(PlayerBaseAttack)); }
+        }
+        public double PlayerSkillOne
+        {
+            get { return _playerSkillOne; }
+            set { _playerSkillOne = value; OnPropertyChanged(nameof(PlayerSkillOne)); }
+        }
+        public double PlayerSkillTwo
+        {
+            get { return _playerSkillTwo; }
+            set { _playerSkillTwo = value; OnPropertyChanged(nameof(PlayerXP)); }
+        }
+        public double PlayerSkillThree
+        {
+            get { return _playerSkillThree; }
+            set { _playerSkillThree = value; OnPropertyChanged(nameof(PlayerXP)); }
+        }
+        public double PlayerThirdEye
+        {
+            get { return _playerThirdEye; }
+            set { _playerThirdEye = value; OnPropertyChanged(nameof(PlayerXP)); }
+        }
+        public string Name
+        {
+            get { return Player.Name; }
+            set { Player.Name = value; OnPropertyChanged(nameof(Name)); }
+        }
+        public double MaxPlayerXP
+        {
+            get { return Player.MaxLevelXPRange; }
+            set { _maxPlayerXP = value; OnPropertyChanged(nameof(MaxPlayerXP)); }
+        }
+        public double MinPlayerXP
+        {
+            get { return Player.MinLevelXPRange; }
+            set { _minPlayerXP = value; OnPropertyChanged(nameof(MinPlayerXP)); }
+        }
+        
 
         //
         // CurrentFightingEnemyID property
@@ -158,6 +234,9 @@ namespace TBQuestGame.PresentationLayer
         // Used to determine which enemy is currently selected on the ListBox ActiveEnemies
         //
         private bool _enemySelected;
+        private double _maxPlayerXP;
+        private double _minPlayerXP;
+
         public bool EnemySelected
         {
             get { return _enemySelected; }
@@ -246,8 +325,38 @@ namespace TBQuestGame.PresentationLayer
         {
             // sets the player's shield
             _playerShield = player.Shield;
+             
             // sets the player's health
-            _playerHealth = player.Health;  
+            _playerHealth = player.Health;
+             
+            // Player's XP
+            _playerXP = player.XP;
+
+            // Max Player XP
+            _maxPlayerXP = player.MaxLevelXPRange;
+          
+            // Player's Level
+            _playerLevel = player.Level;
+
+            // Player's Gold
+            _playerGold = player.Gold;
+
+            // Player's Base Attack
+            _playerBaseAttack = player.BasicAttack;
+
+            // Player's Skill One
+            _playerSkillOne = player.SkillOneAttack;
+
+            // Player's Skill Two
+            _playerSkillTwo = player.SkillTwoAttack;
+
+            // Player's Skill Three
+            _playerSkillThree = player.SkillThreeAttack;
+
+            // Player's Third Eye
+            _playerThirdEye = player.ThirdEyeAttack;
+
+
             // gets currentEnemyID from gameData, and sets the currentEnemyID variable in the view model to equal that
             currentEnemyID = _gameData.currentEnemyID;
             // gets the current enemies list that is passed and sets _currentEnemies in the view model to equal that

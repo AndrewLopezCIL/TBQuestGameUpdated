@@ -26,6 +26,9 @@ namespace TBQuestGame.DataLayer
                 SkillTwoAttack = 0,
                 SkillThreeAttack = 0,
                 ThirdEyeAttack = 0,
+                XP = 0,
+                Level = 1,
+                MinLevelXPRange = 0,
                 StateOfAction = Character.ActionType.Neutral
             };
 
