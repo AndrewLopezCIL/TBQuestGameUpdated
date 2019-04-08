@@ -196,7 +196,28 @@ namespace TBQuestGame.Models
             if (gsm.CurrentEnemies.Count > 0) {
                 //If current enemy is alive/has more than 0 health
                 if (PlayersCurrentState == PlayerState.Fighting) {
-                     
+                    bool anEnemyHasSelection = false;
+                    foreach (Enemy enemy in gsm.CurrentEnemies)
+                    { 
+                        if (enemy.SelectedToFight == true)
+                        {
+                            anEnemyHasSelection = true; break;
+                        }
+                        else if (enemy.SelectedToFight == false)
+                        {
+                            anEnemyHasSelection = false;
+                        } 
+                    }
+                    if (anEnemyHasSelection == false)
+                    {
+                        gsm.Player.currentlyAttacking = gsm.CurrentEnemies[0];
+                        gsm.CurrentEnemies[0].SelectedToFight = true;
+                        gsm.CurrentEnemies[0].AttackingPlayer = true; 
+                        gsm.CurrentEnemies[0].startAttackingPlayer();
+                        gsm.CurrentEnemyID = gsm.CurrentEnemies[0].ID;
+                        gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[0].listPlacement;
+                        fightingEnemy = gsm.CurrentEnemies[0];
+                    }
             if (fightingEnemy.IsAlive == true)
             {
                 switch (attackType)
