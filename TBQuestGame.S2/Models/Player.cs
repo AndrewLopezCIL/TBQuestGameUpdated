@@ -35,7 +35,7 @@ namespace TBQuestGame.Models
         private ClassType classType;
         private PlayerState _playerState;
         private Enemy _currentlyAttacking;
-        private double _maxLevelXPRange = 75.5;
+        private double _maxLevelXPRange = 250.5;
         private double _minLevelXPRange;
         // May remove quest points in the future
         private int _questPoints;
@@ -69,6 +69,13 @@ namespace TBQuestGame.Models
             get { return classType; }
             set { classType = value; }
         }
+        private string _classToString;
+        public string ClassToString
+        {
+            get { return _classToString; }
+            set { _classToString = ClassTypeProp.ToString(); }
+        }
+
         public int Level
         {
             get { return _playerLevel; }

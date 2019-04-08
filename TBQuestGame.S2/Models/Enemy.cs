@@ -221,7 +221,9 @@ namespace TBQuestGame.Models
                         //
                         if (gsm.CurrentEnemies.Count > 0) {
                             // Setting the current attacking enemy in the player's class to the next-in-line enemy
-                            gsm.Player.currentlyAttacking = gsm.CurrentEnemies[listPlacement]; 
+                            if (gsm.Player.currentlyAttacking.listPlacement != gsm.CurrentEnemies.Count)
+                            {
+                            gsm.Player.currentlyAttacking = gsm.CurrentEnemies[listPlacement];
                             // Setting the enemy picture in the view to the next-in-line enemy's PictureSource property
                             gsv.EnemyPicture.Source = gsm.CurrentEnemies[listPlacement].PictureSource;
                             // Setting the next-in-line enemy's SelectedToFight property to true
@@ -232,6 +234,22 @@ namespace TBQuestGame.Models
                             refreshAllEnemiesPositions();
                             // CurrentFightingEnemyListPlacement is set to the next-in-line enemy's listPlacement property/position
                             gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[listPlacement].listPlacement;
+                            }
+                            else
+                            {
+                                gsm.Player.currentlyAttacking = gsm.CurrentEnemies[listPlacement - 1];
+                                // Setting the enemy picture in the view to the next-in-line enemy's PictureSource property
+                                gsv.EnemyPicture.Source = gsm.CurrentEnemies[listPlacement - 1].PictureSource;
+                                // Setting the next-in-line enemy's SelectedToFight property to true
+                                gsm.CurrentEnemies[listPlacement - 1].SelectedToFight = true;
+                                // Setting the GameSessionviewModel's CurrentFightingEnemyID property to equal the next-in-line enemy's ID
+                                gsm.CurrentFightingEnemyID = gsm.CurrentEnemies[listPlacement - 1].ID;
+                                // Refreshing/Resetting all enemies in the list's listPlacement positions
+                                refreshAllEnemiesPositions();
+                                // CurrentFightingEnemyListPlacement is set to the next-in-line enemy's listPlacement property/position
+                                gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[listPlacement - 1].listPlacement;
+                            }
+                            refreshAllEnemiesPositions();
                              
                             gsm.EnemySelected = true; 
 

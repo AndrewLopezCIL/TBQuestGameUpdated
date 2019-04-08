@@ -28,6 +28,7 @@ namespace TBQuestGame.DataLayer
                 ThirdEyeAttack = 0,
                 XP = 0,
                 Level = 1,
+                ClassTypeProp = Player.ClassType.Warrior,
                 MinLevelXPRange = 0,
                 StateOfAction = Character.ActionType.Neutral
             };

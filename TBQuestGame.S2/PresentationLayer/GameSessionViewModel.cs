@@ -72,7 +72,14 @@ namespace TBQuestGame.PresentationLayer
         private double _playerSkillThree;
         // To Display Player's Third Eye Attack Damage
         private double _playerThirdEye;
+        private string _playerClassToString;
+        public string PlayerClassString
+        {
+            get { return _playerClassToString; }
+            set { Player.ClassToString = value; OnPropertyChanged(nameof(PlayerClassString)); }
+        }
 
+        
         public int PlayerLevel
         {
             get { return Player.Level; }
@@ -356,6 +363,8 @@ namespace TBQuestGame.PresentationLayer
             // Player's Third Eye
             _playerThirdEye = player.ThirdEyeAttack;
 
+            // Setting player class string
+            //_playerClassToString =  Player.ClassTypeProp.ToString();
 
             // gets currentEnemyID from gameData, and sets the currentEnemyID variable in the view model to equal that
             currentEnemyID = _gameData.currentEnemyID;
