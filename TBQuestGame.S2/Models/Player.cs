@@ -252,6 +252,14 @@ namespace TBQuestGame.Models
                             {
                                 playerLevelUp(gsm,GSV);
                             }
+                            if (gsm.CurrentEnemies.Count == 0)
+                            {
+                              Location.enableControls(GSV);
+                                        gsm.EnemyDamage = 0;
+                                        gsm.EnemyHealth = 0;
+                                        gsm.EnemyName = "Currently Not Fighting";
+                                        gsm.EnemyLevel = 0;
+                            }
                         }
                         break;
                     case AttackType.SkillOneAttack:

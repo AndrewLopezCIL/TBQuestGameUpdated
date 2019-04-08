@@ -98,6 +98,7 @@ namespace TBQuestGame.PresentationLayer
             string nameOfEnemy ="";
             string levelOfEnemy ="";
             string enemyPicturePath = "";
+            bool isBoss = false;
             Enemy enemy;
             switch (enemyName.ToLower())
             {
@@ -123,6 +124,8 @@ namespace TBQuestGame.PresentationLayer
                     _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
                     nameOfEnemy = blackKnight.Name;
                     levelOfEnemy = "{LVL " + blackKnight.Level + " }";
+                    blackKnight.IsBoss = true;
+                    isBoss = true;
                     enemyPicturePath = blackKnight.Image;
                     blackKnight.listPlacement = getPlacementID(blackKnight);
                     blackKnight.PictureSource = getPictureSource(enemyPicturePath);
@@ -189,7 +192,13 @@ namespace TBQuestGame.PresentationLayer
             new_item.Children.Add(entityLevel);
             new_item.Children.Add(entityName);
             item.Content = new_item;
-            item.Background = Brushes.Red;
+            if (!isBoss) {
+                item.Background = Brushes.Red;
+            }
+            else if (isBoss == true)
+            {
+                item.Background = Brushes.Pink;
+            }
             item.BorderBrush = Brushes.Black;
             item.BorderThickness = new Thickness(3, 3, 3, 0);
 
