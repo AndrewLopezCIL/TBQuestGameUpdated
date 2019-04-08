@@ -181,6 +181,30 @@ namespace TBQuestGame.PresentationLayer
             set { _missionLength = value; }
         }
         //
+        // Current Enemy Stats
+        //
+        public string EnemyName
+        {
+            get { return Player.currentlyAttacking.Name; }
+            set { Player.currentlyAttacking.Name = value; OnPropertyChanged(nameof(EnemyName)); }
+        }
+        public double EnemyHealth
+        {
+            get { return Player.currentlyAttacking.Health; }
+            set{ Player.currentlyAttacking.Health = value; OnPropertyChanged(nameof(EnemyHealth)); }
+        }
+        public double EnemyDamage
+        {
+            get { return Player.currentlyAttacking.BaseAttack; }
+            set { Player.currentlyAttacking.BaseAttack = value; OnPropertyChanged(nameof(EnemyDamage)); }
+        }
+        public int EnemyLevel
+        {
+            get { return Player.currentlyAttacking.Level; }
+            set { Player.currentlyAttacking.Level = value; OnPropertyChanged(nameof(EnemyLevel)); }
+        }
+
+        //
         // Gets the current enemy's ID 
         // This is used to track which enemies are which, increments everytime an enemy is instantiated
         // Going to be used to track which enemy in the list gets hurt when they're selected in ActiveEnemies control
@@ -297,6 +321,10 @@ namespace TBQuestGame.PresentationLayer
                             E.startAttackingPlayer();
                             gsv.EnemyPicture.Source = E.PictureSource;
                             E.SelectedToFight = true;
+                        EnemyDamage = E.BaseAttack;
+                        EnemyName = E.Name;
+                        EnemyHealth = E.Health;
+                        EnemyLevel = E.Level;
                         }
                         else
                         {

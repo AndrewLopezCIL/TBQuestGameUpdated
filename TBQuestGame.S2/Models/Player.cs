@@ -133,6 +133,9 @@ namespace TBQuestGame.Models
             get{ return _currentlyAttacking; }
             set { _currentlyAttacking = value; }
         }
+
+        
+
         #endregion
 
         #region METHODS 
