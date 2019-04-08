@@ -28,6 +28,7 @@ namespace TBQuestGame.Models
             this.Health = health;
             this.Level = _level;
             this.IsAlive = true;
+            this.MaxHealth = 155;
             this.BaseAttack = this.BaseAttack += (this.Level / 100) + .50;
             Random ranXPDrop = new Random();
 

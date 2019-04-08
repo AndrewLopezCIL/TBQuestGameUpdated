@@ -46,6 +46,7 @@ namespace TBQuestGame.PresentationLayer
             ActiveEnemies.DataContext = _gameSessionViewModel.CurrentEnemies;
             DataContext = gameSessionViewModel;
             playerStatsWindow = new PlayerStatsDisplay(_gameSessionViewModel);
+            enemyStatsWindow.DataContext = _gameSessionViewModel;
             playerStatsWindow.DataContext = _gameSessionViewModel;
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }

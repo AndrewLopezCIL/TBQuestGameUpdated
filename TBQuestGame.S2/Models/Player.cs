@@ -220,21 +220,34 @@ namespace TBQuestGame.Models
                         gsm.CurrentEnemyID = gsm.CurrentEnemies[0].ID;
                         gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[0].listPlacement;
                         fightingEnemy = gsm.CurrentEnemies[0];
+                        GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
+                        gsm.EnemyDamage = fightingEnemy.BaseAttack;
+                        gsm.EnemyHealth = fightingEnemy.Health;
+                        gsm.EnemyLevel = fightingEnemy.Level;
+                        gsm.EnemyName = fightingEnemy.Name;
                     }
-            if (fightingEnemy.IsAlive == true)
+                    if (fightingEnemy.IsAlive == true)
             {
                 switch (attackType)
                 {
                     case AttackType.BasicAttack:
+                        GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
                         fightingEnemy.Health -= BasicAttack;
+                        GSV.EnemyHealthDisplay.Value = fightingEnemy.Health;
                         GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
-                        if (fightingEnemy.Health <= 0)
+                        gsm.EnemyDamage = fightingEnemy.BaseAttack;
+                        gsm.EnemyHealth = fightingEnemy.Health;
+                        gsm.EnemyLevel = fightingEnemy.Level;
+                        gsm.EnemyName = fightingEnemy.Name;
+                    if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
                             fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                             fightingEnemy.stopAttackingPlayer();
                             GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
                             fightingEnemy.onDeathRewardPlayer(gsm, fightingEnemy);
+                            GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Hidden;
+                            
                             if (gsm.PlayerXP >= gsm.MaxPlayerXP)
                             {
                                 playerLevelUp(gsm,GSV);

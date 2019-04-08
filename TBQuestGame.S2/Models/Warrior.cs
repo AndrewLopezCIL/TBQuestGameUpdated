@@ -28,6 +28,7 @@ namespace TBQuestGame.Models
             this.Health = health;
             this.Level = _level;
             this.IsAlive = true;
+            this.MaxHealth = 125;
             Random ran = new Random();
             this.GoldDrop = ran.Next(10,19);
             this._imageString = "warrior-icon.png";

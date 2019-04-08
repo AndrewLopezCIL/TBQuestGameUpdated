@@ -183,25 +183,29 @@ namespace TBQuestGame.PresentationLayer
         //
         // Current Enemy Stats
         //
+        private string _enemyName;
         public string EnemyName
         {
-            get { return Player.currentlyAttacking.Name; }
-            set { Player.currentlyAttacking.Name = value; OnPropertyChanged(nameof(EnemyName)); }
+            get { return _enemyName; }
+            set { Player.currentlyAttacking.Name = value; _enemyName = value;  OnPropertyChanged(nameof(EnemyName)); }
         }
+        private double _enemyHealth;
         public double EnemyHealth
         {
-            get { return Player.currentlyAttacking.Health; }
-            set{ Player.currentlyAttacking.Health = value; OnPropertyChanged(nameof(EnemyHealth)); }
+            get { return _enemyHealth; }
+            set{ Player.currentlyAttacking.Health = value; _enemyHealth = value; OnPropertyChanged(nameof(EnemyHealth)); }
         }
+        private double _enemyDamage;
         public double EnemyDamage
         {
-            get { return Player.currentlyAttacking.BaseAttack; }
-            set { Player.currentlyAttacking.BaseAttack = value; OnPropertyChanged(nameof(EnemyDamage)); }
+            get { return _enemyDamage; }
+            set { Player.currentlyAttacking.BaseAttack = value; _enemyDamage = value;  OnPropertyChanged(nameof(EnemyDamage)); }
         }
+        private int _enemyLevel;
         public int EnemyLevel
         {
-            get { return Player.currentlyAttacking.Level; }
-            set { Player.currentlyAttacking.Level = value; OnPropertyChanged(nameof(EnemyLevel)); }
+            get { return _enemyLevel; }
+            set { Player.currentlyAttacking.Level = value; _enemyLevel = value; OnPropertyChanged(nameof(EnemyLevel)); }
         }
 
         //
@@ -325,6 +329,10 @@ namespace TBQuestGame.PresentationLayer
                         EnemyName = E.Name;
                         EnemyHealth = E.Health;
                         EnemyLevel = E.Level;
+                        gsv.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
+                        gsv.EnemyHealthDisplay.Maximum = E.MaxHealth;
+                        gsv.EnemyHealthDisplay.Value = E.Health;
+                        gsv.EnemyHealthDisplay.Minimum = 0;
                         }
                         else
                         {
@@ -394,6 +402,27 @@ namespace TBQuestGame.PresentationLayer
             // Setting player class string
             //_playerClassToString =  Player.ClassTypeProp.ToString();
 
+            if (player.currentlyAttacking != null) {
+                // EnemyHealth
+                _enemyHealth = player.currentlyAttacking.Health;
+                // EnemyName
+                _enemyName = player.currentlyAttacking.Name;
+                // EnemyDamage
+                _enemyDamage = player.currentlyAttacking.BaseAttack;
+                // EnemyLevel
+                _enemyLevel = player.currentlyAttacking.Level;
+            }
+            else
+            {
+                // EnemyHealth
+                _enemyHealth = 0;
+                // EnemyName
+                _enemyName = "Currently Not Fighting";
+                // EnemyDamage
+                _enemyDamage = 0;
+                // EnemyLevel
+                _enemyLevel = 0;
+            }
             // gets currentEnemyID from gameData, and sets the currentEnemyID variable in the view model to equal that
             currentEnemyID = _gameData.currentEnemyID;
             // gets the current enemies list that is passed and sets _currentEnemies in the view model to equal that

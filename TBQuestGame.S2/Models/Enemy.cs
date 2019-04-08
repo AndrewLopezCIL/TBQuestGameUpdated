@@ -25,6 +25,7 @@ namespace TBQuestGame.Models
         private int _listPlacement;
         public int currentID = 0;
         private int _id;
+        private int _maxEnemyHealth;
         private bool _isBoss;
         private bool _selectedToFight = false;
         private EnemyType _typeOfEnemy;
@@ -41,6 +42,11 @@ namespace TBQuestGame.Models
         #endregion
 
         #region PROPERTIES
+        public int MaxHealth
+        {
+            get { return _maxEnemyHealth; }
+            set { _maxEnemyHealth = value; }
+        }
         public EnemyType TypeOfEnemy
         {
             get { return _typeOfEnemy; }
@@ -234,6 +240,7 @@ namespace TBQuestGame.Models
                             refreshAllEnemiesPositions();
                             // CurrentFightingEnemyListPlacement is set to the next-in-line enemy's listPlacement property/position
                             gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[listPlacement].listPlacement;
+                                
                             }
                             else
                             {
