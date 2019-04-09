@@ -256,15 +256,7 @@ namespace TBQuestGame.PresentationLayer
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
                     {
-                        TipsBox.Foreground = Brushes.Red;
-                        TipsBox.FontWeight = FontWeights.Bold;
-                        TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
-                        playerShieldBar.Value += 35;
-                        _gameSessionViewModel.PlayerShield += 35;
-                        BossBattleStart();
-                        LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
-                        DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                        Location.disableControls(this);
+                        bossRoomEnterUpdate();
                     }
                 }
                 mapWindow.CurrentLocationDisplay.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
@@ -275,9 +267,8 @@ namespace TBQuestGame.PresentationLayer
         {
             TipsBox.Foreground = Brushes.Red;
             TipsBox.FontWeight = FontWeights.Bold;
-            TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";  
-            playerShieldBar.Value += 35;
-            playerShieldBarLabel.Content = playerShieldBar.Value;
+            TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
+            _gameSessionViewModel.PlayerShield += 35;
             BossBattleStart();
             LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
             DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
