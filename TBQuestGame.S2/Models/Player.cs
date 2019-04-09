@@ -195,7 +195,7 @@ namespace TBQuestGame.Models
             attackType = typeOfAttack;
             //
             // ADD IN, IF NOT SELECTED THEN AUTOMATICALLY ATTACK FIRST ENEMY IN LIST
-            //
+            // 
             if (gsm.CurrentEnemies.Count > 0) {
                 //If current enemy is alive/has more than 0 health
                 if (PlayersCurrentState == PlayerState.Fighting) {
@@ -225,6 +225,7 @@ namespace TBQuestGame.Models
                         gsm.EnemyHealth = fightingEnemy.Health;
                         gsm.EnemyLevel = fightingEnemy.Level;
                         gsm.EnemyName = fightingEnemy.Name;
+                        GSV.EnemyPicture.Source = gsm.Player.currentlyAttacking.PictureSource;
                     }
                     if (fightingEnemy.IsAlive == true)
             {
@@ -239,6 +240,7 @@ namespace TBQuestGame.Models
                         gsm.EnemyHealth = fightingEnemy.Health;
                         gsm.EnemyLevel = fightingEnemy.Level;
                         gsm.EnemyName = fightingEnemy.Name;
+                                GSV.EnemyPicture.Source = fightingEnemy.PictureSource;
                     if (fightingEnemy.Health <= 0)
                         {
                             fightingEnemy.Health = 0;
@@ -247,6 +249,15 @@ namespace TBQuestGame.Models
                             GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
                             fightingEnemy.onDeathRewardPlayer(gsm, fightingEnemy);
                             GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Hidden;
+                            fightingEnemy.AttackingPlayer = false;
+                                    foreach (Enemy enemy in gsm.CurrentEnemies)
+                                    {
+                                        if (enemy.SelectedToFight == true)
+                                        {
+                                            enemy.SelectedToFight = false;
+                                        } 
+                                    }
+                            fightingEnemy.SelectedToFight = false;
                             
                             if (gsm.PlayerXP >= gsm.MaxPlayerXP)
                             {

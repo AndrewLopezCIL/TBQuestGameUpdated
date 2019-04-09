@@ -15,7 +15,7 @@ namespace TBQuestGame.DataLayer
             {
                 Id = 1,
                 Name = "Player",
-                BasicAttack = 75,
+                BasicAttack = 3.2,
                 Gold = 0,
                 Health = 100,
                 Shield = 35,
@@ -64,7 +64,8 @@ namespace TBQuestGame.DataLayer
                 ChanceOfFight = true,
                 MultiAttackLocation = false,
                 LocationMessage = "You look around to see your village\n overran by a group of bandits...\n" +
-                "Where do you decide to run?"
+                "Where do you decide to run?",
+                LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Moderate Area!"
             };
             gameMap.MapLocations[0, 1] = new Location()
             {
@@ -76,7 +77,7 @@ namespace TBQuestGame.DataLayer
                 ChanceOfFight = true,
                 MultiAttackLocation = false,
                 LocationMessage = "You're in the Dark Forest and run into a monster!" + 
-                "It starts attacking you!"
+                "It starts attacking you!", LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Moderate Area!"
 
             };
 
@@ -89,7 +90,8 @@ namespace TBQuestGame.DataLayer
                 ChanceOfFight = false,
                 BossFightRoom = true,
                 MultiAttackLocation = true,
-                LocationMessage = "This is the location message for the Vickren Dungeon..."
+                LocationMessage = "This is the location message for the Vickren Dungeon...",
+                LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "[Boss Room] Multi-Attack Area!"
             };
             gameMap.MapLocations[1, 2] = new Location()
             {
@@ -100,7 +102,8 @@ namespace TBQuestGame.DataLayer
                 ChanceOfFight = false,
                 BossFightRoom = true,
                 MultiAttackLocation = true,
-                LocationMessage = "This is the location message for Kardon Dungeon..."
+                LocationMessage = "This is the location message for Kardon Dungeon...",
+                LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "[Boss Room] Multi-Attack Area"
             };
             gameMap.MapLocations[2, 0] = new Location()
             {
@@ -108,7 +111,9 @@ namespace TBQuestGame.DataLayer
                 Name = "Rohand Village",
                 Description = "Rohand Village is home to the only humans left on the planet.",
                 MultiAttackLocation = false,
-                Accessible = false, BossFightRoom = false, ChanceOfFight = true, LocationMessage = "This is the location message for Rohand Village..." };
+                Accessible = false, BossFightRoom = false, ChanceOfFight = true, LocationMessage = "This is the location message for Rohand Village...",
+                LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Moderate Area"
+            };
             gameMap.MapLocations[2, 1] = new Location()
             {
                 Id = 2,
@@ -117,7 +122,8 @@ namespace TBQuestGame.DataLayer
                 BossFightRoom = false,
                 ChanceOfFight = true,
                 MultiAttackLocation = true,
-                LocationMessage = "This is the location message for The Dark Forest..."
+                LocationMessage = "This is the location message for The Dark Forest...",
+                LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Multi-Attack Area!"
             }; 
             return gameMap;
         }

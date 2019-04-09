@@ -25,7 +25,7 @@ namespace TBQuestGame.Models
         private int _listPlacement;
         public int currentID = 0;
         private int _id;
-        private int _maxEnemyHealth;
+        private double _maxEnemyHealth;
         private bool _isBoss;
         private bool _selectedToFight = false;
         private EnemyType _typeOfEnemy;
@@ -42,7 +42,7 @@ namespace TBQuestGame.Models
         #endregion
 
         #region PROPERTIES
-        public int MaxHealth
+        public double MaxHealth
         {
             get { return _maxEnemyHealth; }
             set { _maxEnemyHealth = value; }
@@ -346,25 +346,7 @@ namespace TBQuestGame.Models
             // When switching between enemies, it starts each timer and never stops, so the damage being done
             // to player keeps piling on and soon the player gets one-tapped
             //
-
-
-            /*
-            if (_gameSessionViewModel.CurrentLocation.MultiAttackLocation && _gameSessionViewModel.Player.currentlyAttacking.AttackingPlayer == false)
-            {
-                
-                startAttackingPlayer();
-                AttackingPlayer = true;
-            }
-            else if (SelectedToFight == true && AttackingPlayer == false)
-            {
-                AttackingPlayer = true;
-                startAttackingPlayer();
-            }*/
-
-            /*if (AttackingPlayer == true)
-            {
-                startAttackingPlayer();
-            }*/
+             
         }
 
         private void AttackTimerTick(object sender, EventArgs e)

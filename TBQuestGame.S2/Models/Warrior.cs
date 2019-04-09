@@ -10,7 +10,7 @@ namespace TBQuestGame.Models
     { 
         private int _level = 35;
         private string _imageString;
-        private int health = 125;
+        private double health = 125;
         
         public string Image
         {
@@ -28,7 +28,11 @@ namespace TBQuestGame.Models
             this.Health = health;
             this.Level = _level;
             this.IsAlive = true;
-            this.MaxHealth = 125;
+            double newHealth = Level + (Level * 2.6);
+            this.health = newHealth;
+            this.MaxHealth = newHealth; 
+            GSV.EnemyHealthDisplay.Value = newHealth;
+            GSV.EnemyHealthDisplay.Maximum = newHealth;
             Random ran = new Random();
             this.GoldDrop = ran.Next(10,19);
             this._imageString = "warrior-icon.png";

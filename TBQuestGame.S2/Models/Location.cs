@@ -33,6 +33,12 @@ namespace TBQuestGame.Models
             get { return locationMessage; }
             set { locationMessage = value; }
         }
+        private string _locationWarningMessage;
+        public string LocationWarningMessage
+        {
+            get { return _locationWarningMessage; }
+            set { _locationWarningMessage = value; }
+        }
 
         private bool _fightChance;
 

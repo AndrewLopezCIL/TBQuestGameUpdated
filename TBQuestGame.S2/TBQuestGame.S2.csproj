@@ -88,6 +88,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Bandit.cs" />
     <Compile Include="PresentationLayer\EnemyStats.xaml.cs">
       <DependentUpon>EnemyStats.xaml</DependentUpon>
     </Compile>

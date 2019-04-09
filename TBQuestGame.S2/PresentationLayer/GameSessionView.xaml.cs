@@ -132,9 +132,18 @@ namespace TBQuestGame.PresentationLayer
 
                     break;
                 case "bandit":
+                    Bandit bandit = new Bandit(false, _gameSessionViewModel, this);
+                    bandit.RemovedFromActiveEnemiesList = false;
+                    _gameSessionViewModel.Player.PlayersCurrentState = Player.PlayerState.Fighting;
+                    bandit.AttackingPlayer = true;
+                    enemy = bandit;
+                    _gameSessionViewModel.CurrentEnemies.Add(bandit);
                     nameOfEnemy = "Bandit";
-                    levelOfEnemy = "{LVL 15}";
-                    enemyPicturePath = "Bandit.png";
+                    levelOfEnemy = "{LVL " + bandit.Level + " }";
+                    enemyPicturePath = bandit.Image;
+                    bandit.listPlacement = getPlacementID(bandit);
+                    bandit.PictureSource = getPictureSource(enemyPicturePath);
+
                     break;
                 case "mudcrawler":
                     nameOfEnemy = "MudCrawler";
@@ -252,6 +261,7 @@ namespace TBQuestGame.PresentationLayer
 
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+                setLocationWarningMesasge(_gameSessionViewModel, this);
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
@@ -272,7 +282,23 @@ namespace TBQuestGame.PresentationLayer
             BossBattleStart();
             LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
             DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+            _gameSessionViewModel.LocationWarningMessage = _gameSessionViewModel.CurrentLocation.LocationWarningMessage;
             Location.disableControls(this);
+        }
+        private void setLocationWarningMesasge(GameSessionViewModel gsm, GameSessionView gsv)
+        {
+            if (gsm.GameMap.CurrentLocation.MultiAttackLocation == true)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "Multi-Attack Area!";
+            }
+            else if (gsm.GameMap.CurrentLocation.BossFightRoom)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "[BOSS] Multi-Attack Area!";
+            }
+            else if (gsm.GameMap.CurrentLocation.MultiAttackLocation == false)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "Moderate Area!";
+            }
         }
         //
         // EAST BUTTON
@@ -287,6 +313,8 @@ namespace TBQuestGame.PresentationLayer
                 }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+                setLocationWarningMesasge(_gameSessionViewModel, this);
+
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
@@ -314,6 +342,8 @@ namespace TBQuestGame.PresentationLayer
                 }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+                setLocationWarningMesasge(_gameSessionViewModel, this);
+
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
@@ -344,6 +374,8 @@ namespace TBQuestGame.PresentationLayer
                 }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+                setLocationWarningMesasge(_gameSessionViewModel, this);
+
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))

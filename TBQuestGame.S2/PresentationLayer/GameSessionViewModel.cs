@@ -219,6 +219,15 @@ namespace TBQuestGame.PresentationLayer
             set { currentEnemyID = value; OnPropertyChanged(nameof(CurrentEnemyID)); }
         }
         //
+        // Get warning message for the area ( For MAP DISPALY )
+        //
+        public string LocationWarningMessage
+        {
+            get { return this.CurrentLocation.LocationWarningMessage; }
+            set { this.CurrentLocation.LocationWarningMessage = value; OnPropertyChanged(nameof(LocationWarningMessage)); }
+        }
+
+        //
         // AccessibleLocations is used to store all of the locations that the player can access
         //
         public ObservableCollection<Location> AccessibleLocations
@@ -333,6 +342,7 @@ namespace TBQuestGame.PresentationLayer
                         gsv.EnemyHealthDisplay.Maximum = E.MaxHealth;
                         gsv.EnemyHealthDisplay.Value = E.Health;
                         gsv.EnemyHealthDisplay.Minimum = 0;
+                        
                         }
                         else
                         {
