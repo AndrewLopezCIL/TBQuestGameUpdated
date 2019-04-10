@@ -41,7 +41,9 @@
         <Label Content="Andrew Lopez" Style="{StaticResource Tags}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
         <Button Content="Save" IsEnabled="False" Style="{StaticResource Buttons}" Grid.Row="1" Grid.Column="1"/>
         <Button Content="Load" IsEnabled="False" Style="{StaticResource Buttons}" Grid.Row="2" Grid.Column="1"/>
-        <Button Content="Quit"  Style="{StaticResource Buttons}" Grid.Row="3" Grid.Column="1" Background="IndianRed" Click="Button_Click"/>  
+        <Button Content="Quit"  Style="{StaticResource Buttons}" Grid.Row="3" Grid.Column="1" Background="IndianRed" Click="Button_Click"/>
+        <Button Content="Help" IsEnabled="False" Style="{StaticResource Buttons}" Grid.Row="5" Grid.Column="0" Width="75" Height="25"/>
         <Button Content="Dev Log" IsEnabled="False" Style="{StaticResource Buttons}" Grid.Row="5" Grid.Column="2" Width="75" Height="25"/>
+            
     </Grid>
 </Window>

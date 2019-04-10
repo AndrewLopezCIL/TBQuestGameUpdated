@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
         mc:Ignorable="d"
-        Title="InventoryDisplay" Height="200" Width="350" Closing="Window_Closing">
+        Title="InventoryDisplay" Height="200" Width="350" Closing="Window_Closing" Icon="/Images/sword-icon.png">
     <Grid>
         
     </Grid>

@@ -356,6 +356,7 @@ namespace TBQuestGame.PresentationLayer
                             E.startAttackingPlayer();
 
                             gsv.EnemyPicture.Source = E.PictureSource;
+                        gsv.enemyStatsWindow.EnemyStatsPicture.Source = E.PictureSource;
                             E.SelectedToFight = true;
                         EnemyDamage = E.BaseAttack;
                         EnemyName = E.Name;

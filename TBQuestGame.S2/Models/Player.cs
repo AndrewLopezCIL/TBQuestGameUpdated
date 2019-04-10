@@ -235,6 +235,7 @@ namespace TBQuestGame.Models
                         gsm.EnemyLevel = fightingEnemy.Level;
                         gsm.EnemyName = fightingEnemy.Name;
                         GSV.EnemyPicture.Source = gsm.Player.currentlyAttacking.PictureSource;
+                        GSV.enemyStatsWindow.EnemyStatsPicture.Source = gsm.Player.currentlyAttacking.PictureSource;
                     }
                     if (fightingEnemy.IsAlive == true)
             {
@@ -249,9 +250,10 @@ namespace TBQuestGame.Models
                         gsm.EnemyHealth = fightingEnemy.Health;
                         gsm.EnemyLevel = fightingEnemy.Level;
                         gsm.EnemyName = fightingEnemy.Name;
-                                GSV.EnemyPicture.Source = fightingEnemy.PictureSource;
-                    if (fightingEnemy.Health <= 0)
-                        {
+                        GSV.EnemyPicture.Source = fightingEnemy.PictureSource;
+                        GSV.enemyStatsWindow.EnemyStatsPicture.Source = fightingEnemy.PictureSource;
+                         if (fightingEnemy.Health <= 0)
+                            {
                             fightingEnemy.Health = 0;
                             fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                             fightingEnemy.stopAttackingPlayer();

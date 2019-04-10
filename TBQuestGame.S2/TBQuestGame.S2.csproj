@@ -91,6 +91,8 @@
     <Compile Include="Models\Enemies\Bandit.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Items\RubySword.cs" />
+    <Compile Include="Models\NPCs\Hermin.cs" />
+    <Compile Include="Models\NPCs\Xerath.cs" />
     <Compile Include="PresentationLayer\EnemyStats.xaml.cs">
       <DependentUpon>EnemyStats.xaml</DependentUpon>
     </Compile>
@@ -198,8 +200,6 @@
   <ItemGroup>
     <Resource Include="Images\MapIcon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\NPCs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
