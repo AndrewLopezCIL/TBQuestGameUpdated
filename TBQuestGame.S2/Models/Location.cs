@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,7 +88,13 @@ namespace TBQuestGame.Models
             set { _fightRoom = value; }
         }
 
-       
+        private ObservableCollection<Item> _lootableItems = new ObservableCollection<Item>();
+        public ObservableCollection<Item> LootableItems
+        {
+            get { return _lootableItems; }
+            set { _lootableItems = value; }
+        }
+
         public static void enableControls(GameSessionView view)
         {
             view.North_Button.IsEnabled = true;

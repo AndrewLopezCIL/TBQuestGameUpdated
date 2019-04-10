@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,6 +134,12 @@ namespace TBQuestGame.Models
             get{ return _currentlyAttacking; }
             set { _currentlyAttacking = value; }
         }
+        private ObservableCollection<Item> _inventory = new ObservableCollection<Item>();
+        public ObservableCollection<Item> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
 
         
 
@@ -221,6 +228,8 @@ namespace TBQuestGame.Models
                         gsm.CurrentFightingEnemyListPlacement = gsm.CurrentEnemies[0].listPlacement;
                         fightingEnemy = gsm.CurrentEnemies[0];
                         GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
+                        GSV.EnemyHealthDisplay.Maximum = fightingEnemy.MaxHealth;
+                        GSV.EnemyHealthDisplay.Value = fightingEnemy.Health;
                         gsm.EnemyDamage = fightingEnemy.BaseAttack;
                         gsm.EnemyHealth = fightingEnemy.Health;
                         gsm.EnemyLevel = fightingEnemy.Level;

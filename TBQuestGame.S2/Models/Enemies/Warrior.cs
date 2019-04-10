@@ -24,25 +24,26 @@ namespace TBQuestGame.Models
         }
         public Warrior(bool isBoss, GameSessionViewModel _gameSessionViewModel, GameSessionView GSV) : base(_gameSessionViewModel, GSV)
         {
-            
-            this.Health = health;
+
             this.Level = _level;
-            this.IsAlive = true;
             double newHealth = Level + (Level * 2.6);
-            this.health = newHealth;
-            this.MaxHealth = newHealth; 
-            GSV.EnemyHealthDisplay.Value = newHealth;
+            this.Health = newHealth;
+            this.IsAlive = true;
+            this.MaxHealth = newHealth;
             GSV.EnemyHealthDisplay.Maximum = newHealth;
-            Random ran = new Random();
-            this.GoldDrop = ran.Next(10,19);
-            this._imageString = "warrior-icon.png";
+            GSV.EnemyHealthDisplay.Value = newHealth;
+            this.BaseAttack = this.BaseAttack += (this.Level / 100) + .50;
             Random ranXPDrop = new Random();
 
-            this.XPDrop = ranXPDrop.Next(20,35);
+            this.XPDrop = ranXPDrop.Next(35, 60);
+            Random goldRan = new Random();
+            this.GoldDrop = goldRan.Next(8, 14);
+            this._imageString = "warrior-icon.png";
             this.Name = "Warrior";
-            this.BaseAttack = this.BaseAttack += (this.Level / 100) + .75; 
             _gameSessionViewModel.CurrentEnemyID += 1;
             this.ID = _gameSessionViewModel.CurrentEnemyID;
+
+
             //
             // if passed isBoss bool value is true, then set the property to true, otherwise set the property to false
             //

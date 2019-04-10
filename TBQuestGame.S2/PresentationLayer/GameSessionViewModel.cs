@@ -12,6 +12,7 @@ namespace TBQuestGame.PresentationLayer
     public class GameSessionViewModel : ObservableObject
     {
         #region FIELDS
+
         // player value for Player property
         private Player _player;
 
@@ -32,9 +33,10 @@ namespace TBQuestGame.PresentationLayer
 
         // multiAttackLocation value for MultiAttackLocation property
         private bool _multiAttackLocation;
-
+        // Items object being instantiated
+     
         // GameData object being instantiated
-        GameData _gameData = new GameData();
+        public GameData _gameData = new GameData();
 
         // currentEnemyID value for CurrentEnemyID property
         private int currentEnemyID;
@@ -317,6 +319,25 @@ namespace TBQuestGame.PresentationLayer
         #region METHODS 
         public void SelectedEnemySetter(int selected, GameSessionView gsv)
         {
+            foreach (Enemy item in CurrentEnemies)
+            {
+                if (CurrentLocation.MultiAttackLocation == false)
+                {
+                    if (item.SelectedToFight == false)
+                    {
+                        item.stopAttackingPlayer();
+                        gsv.DialogueBox.Text = "Stopped attacking player";
+                    }
+                }
+                else if (CurrentLocation.MultiAttackLocation == true)
+                {
+                    if (item.SelectedToFight == false)
+                    {
+                        item.stopAttackingPlayer();
+                        item.startAttackingPlayer();
+                    }
+                }
+            }
             EnemySelected = true;  
             foreach (Enemy E in CurrentEnemies)
             {
@@ -331,7 +352,9 @@ namespace TBQuestGame.PresentationLayer
                         if (E.SelectedToFight == false)
                         {
                             E.AttackingPlayer = true;
+
                             E.startAttackingPlayer();
+
                             gsv.EnemyPicture.Source = E.PictureSource;
                             E.SelectedToFight = true;
                         EnemyDamage = E.BaseAttack;

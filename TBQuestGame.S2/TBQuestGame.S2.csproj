@@ -88,12 +88,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Bandit.cs" />
+    <Compile Include="Models\Enemies\Bandit.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Items\RubySword.cs" />
     <Compile Include="PresentationLayer\EnemyStats.xaml.cs">
       <DependentUpon>EnemyStats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BlackKnight.cs" />
-    <Compile Include="Models\Warrior.cs" />
+    <Compile Include="Models\Enemies\BlackKnight.cs" />
+    <Compile Include="Models\Enemies\Warrior.cs" />
     <Compile Include="PresentationLayer\GameMenuDisplay.xaml.cs">
       <DependentUpon>GameMenuDisplay.xaml</DependentUpon>
     </Compile>
@@ -195,6 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\MapIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\NPCs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

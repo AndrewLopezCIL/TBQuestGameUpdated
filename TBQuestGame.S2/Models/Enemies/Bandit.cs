@@ -25,7 +25,9 @@ namespace TBQuestGame.Models
         }
         public Bandit(bool isBoss, GameSessionViewModel _gameSessionViewModel, GameSessionView GSV) : base(_gameSessionViewModel, GSV)
         {
-             
+             //
+             // Can possibly move most of this stuff into the enemy class constructor
+             //
             this.Level = _level;
             this.IsAlive = true;
             double newHealth = Level + (Level * 2.6);
