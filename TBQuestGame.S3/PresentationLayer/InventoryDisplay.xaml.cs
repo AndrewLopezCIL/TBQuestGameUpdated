@@ -283,11 +283,12 @@ namespace TBQuestGame.PresentationLayer
                                 found = true;
                                 gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
                                 break;
-                            } 
+                            }
                             else if (gsm.GameMap.CurrentLocation.LootableItems[items].Name != gsm.Player.Inventory[item].Name)
                             {
                                 found = false;
                             }
+
                         }
                         if (found == false)
                         {
