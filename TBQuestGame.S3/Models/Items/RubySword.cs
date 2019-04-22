@@ -9,29 +9,23 @@ namespace TBQuestGame.Models.Items
 {
     public class RubySword : Item
     {
-        private double _swordDamage;
-
-        public double Damage
-        {
-            get { return _swordDamage; }
-            set { _swordDamage = value; }
-        }
-
-
+         
         public RubySword(GameSessionViewModel gsm, GameSessionView gsv)
         {
             //Mid Level Sword : Moderate damage
-            this._swordDamage = 6.3;
+            this.Damage = 6.3;
             this.Consumable = false;
             this.Collected = false;
+            this.CanEquip = true;
             this.SpecialObject = false;
+            this.Equipped = false;
             this.PicturePath = "/Images/swendivericon.png";
             this.PictureSource = gsv.getPictureSource(this.PicturePath);
-            if (gsm.Player.Level >= 3) {
+           /* if (gsm.Player.Level >= 3) {
                 this.CanEquip = true;
             }else{
                 this.CanEquip = false;
-            }
+            }*/
             this.ID = gsm._gameData.itemID += 1;
             this.ItemStackCount += 1;
             this.Value = 225;

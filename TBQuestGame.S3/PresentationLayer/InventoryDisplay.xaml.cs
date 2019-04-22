@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TBQuestGame.Models;
 using TBQuestGame.Models.Items;
 
 namespace TBQuestGame.PresentationLayer
@@ -24,6 +25,7 @@ namespace TBQuestGame.PresentationLayer
         GameSessionView gsv;
         public int _LocationLootListItemSelected = 0;
         public int _PlayerInventoryItemSelected = 0;
+        private bool stopLoop = false;
         public InventoryDisplay(GameSessionViewModel gsm, GameSessionView GSV)
         {
             InitializeComponent();
@@ -169,13 +171,20 @@ namespace TBQuestGame.PresentationLayer
             UpdatePlayerInventoryListPlacement();
             PlayerInventorySelectorSetter(item.SelectedIndex);
         }
+        
         //
         // Player inventory item used/consumed feature
         //
         private void PlayerInventoryList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            stopLoop = false;
             for (int item = 0; item < gsm.Player.Inventory.Count; item++)
-            {
+            { 
+               
+                if (stopLoop == true)
+                {
+                    break;
+                }
                 if (gsm.Player.Inventory[item].HasPlayerInventorySelection == true)
                 {
                     //
@@ -187,7 +196,15 @@ namespace TBQuestGame.PresentationLayer
                         switch (gsm.Player.Inventory[item].Name)
                         {
                             case "Basic Healing Potion":
+                                if (gsm.Player.Inventory[item].ItemStackCount > 1)
+                                {
+                                    gsm.Player.Inventory[item].ItemStackCount -= 1;
+                                }
+                                else if (gsm.Player.Inventory[item].ItemStackCount == 1)
+                                { 
                                 gsm.Player.Inventory.RemoveAt(item);
+                                }
+
                                 BasicHealingPotion potion = new BasicHealingPotion(gsm, gsv);
                                 potion.potionUsedWithCooldown(gsm);
                                 break; 
@@ -197,18 +214,244 @@ namespace TBQuestGame.PresentationLayer
                     }
                     else if(gsm.Player.Inventory[item].CanEquip == true){
                         switch (gsm.Player.Inventory[item].Name)
-	                        {
+                        {
                             case "Ruby Sword":
+                                #region EquippingSword
+
                                 //gsm.PlayerBaseAttack = gsm.Player.Inventory[item].dama
                                 //
                                 // Set the currently equiped weapon property in player's class to equal
                                 // the Ruby Sword, then add the old equiped weapon to the player's inventory
                                 // Remove Ruby Sword from player's inventory when equiped 
                                 //
+                                if (gsm.Player.EquippedWeapon == null) {
+
+                                    if (gsm.Player.Inventory[item].ItemStackCount > 1)
+                                    {
+                                        gsm.Player.Inventory[item].ItemStackCount -= 1;
+                                        gsm.Player.Inventory[item].Equipped = true;
+                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                        gsm.PlayerEquippedItems.Add(gsm.Player.Inventory[item]);
+                                        stopLoop = true;
+
+                                        break;
+                                        //gsm.Player.Inventory.RemoveAt(gsm.Player.Inventory[item].PlayerInventoryListPlacement);
+                                    }
+                                    else if (gsm.Player.Inventory[item].ItemStackCount == 1)
+                                    {
+                                        gsm.Player.EquippedItems.Add(gsm.Player.Inventory[item]);
+                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                        gsm.Player.Inventory[item].Equipped = true;
+                                        gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                        stopLoop = true;
+
+                                        break;
+                                    }
+                                }
+                                else if (gsm.Player.EquippedWeapon != null)
+                                {
+                                    bool foundInv = false;
+                                    for (int inv = 0; inv < gsm.Player.Inventory.Count; inv++)
+                                    {
+                                        //
+                                        // If there's an item in the player's inventory that equals the currently equipped item's name and it's not special
+                                        // then increment stack value, set equipped to false, and set the equipped item to Ruby Sword
+                                        //
+                                        if (gsm.Player.EquippedWeapon.SpecialObject == false) {
+                                            if (gsm.Player.Inventory[inv].Name == gsm.Player.EquippedWeapon.Name)
+                                            {
+                                                //    gsm.Player.Inventory[inv].ItemStackCount += 1;
+                                                //    gsm.Player.EquippedWeapon.Equipped = false;
+                                                //    // if doesnt work then add for loop
+                                                //    gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                //    gsm.Player.EquippedWeapon = gsm.Player.Inventory[inv];
+                                                foundInv = true;
+                                                stopLoop = true;
+
+                                                break;
+                                            } 
+                                            else if (gsm.Player.Inventory[item].Name != gsm.Player.EquippedWeapon.Name)
+                                            {
+                                                if (gsm.Player.Inventory[item].SpecialObject == false) {
+                                                    if (gsm.Player.Inventory[inv].ItemStackCount > 1)
+                                                    {
+                                                        gsm.Player.Inventory[inv].ItemStackCount -= 1;
+                                                        gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[inv];
+                                                        gsm.Player.EquippedWeapon.Equipped = true;
+                                                        stopLoop = true;
+                                                        foundInv = true;
+                                                        break;
+                                                    }
+                                                    else if (gsm.Player.Inventory[inv].ItemStackCount == 1)
+                                                    {
+                                                        gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                                        gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                                        gsm.Player.EquippedItems.Add(gsm.Player.EquippedWeapon);
+                                                        gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                                        stopLoop = true;
+                                                        foundInv = true;
+                                                        break;
+                                                    } }
+                                                else if (gsm.Player.Inventory[item].SpecialObject == true)
+                                                {
+
+                                                }
+                                            }
+
+                                        }
+                                        //
+                                        // Last edits made in this area ( Re-arranging code might be the problem)
+                                        //
+                                        else if (gsm.Player.EquippedWeapon.SpecialObject == true)
+                                        {
+                                            if (gsm.Player.Inventory[inv].Name == gsm.Player.EquippedWeapon.Name)
+                                            {
+                                                gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                                gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                                gsm.Player.EquippedItems.Add(gsm.Player.EquippedWeapon);
+                                                gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                               
+                                                foundInv = true;
+                                                stopLoop = true;
+
+                                                break;
+                                            }
+                                            else if (gsm.Player.Inventory[item].Name != gsm.Player.EquippedWeapon.Name)
+                                            { 
+                                                 
+                                                    gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                                    gsm.Player.EquippedItems.Add(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                                    stopLoop = true;
+                                                    foundInv = true;
+                                                    break;
+                                            
+                                            } }
+                                    }
+                                    if (foundInv == false)
+                                    {
+                                        gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                        gsm.Player.EquippedWeapon.Equipped = false;
+                                        stopLoop = true;
+                                        break;
+                                    }
+                                }
+                                #endregion
+                                
                                 break;
-                                case "Excalibur":
-                                    break;
-		                        default:
+
+                            case "Excalibur":
+                                #region EquippingSword
+
+                                //gsm.PlayerBaseAttack = gsm.Player.Inventory[item].dama
+                                //
+                                // Set the currently equiped weapon property in player's class to equal
+                                // the Ruby Sword, then add the old equiped weapon to the player's inventory
+                                // Remove Ruby Sword from player's inventory when equiped 
+                                //
+                                if (gsm.Player.EquippedWeapon == null)
+                                {
+
+                                    if (gsm.Player.Inventory[item].ItemStackCount > 1)
+                                    {
+                                        gsm.Player.Inventory[item].ItemStackCount -= 1;
+                                        gsm.Player.Inventory[item].Equipped = true;
+                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                        gsm.PlayerEquippedItems.Add(gsm.Player.Inventory[item]);
+                                        stopLoop = true;
+
+                                        break;
+                                        //gsm.Player.Inventory.RemoveAt(gsm.Player.Inventory[item].PlayerInventoryListPlacement);
+                                    }
+                                    else if (gsm.Player.Inventory[item].ItemStackCount == 1)
+                                    {
+                                        gsm.Player.EquippedItems.Add(gsm.Player.Inventory[item]);
+                                        gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                        gsm.Player.Inventory[item].Equipped = true;
+                                        gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                        stopLoop = true;
+
+                                        break;
+                                    }
+                                }
+                                else if (gsm.Player.EquippedWeapon != null)
+                                {
+                                    bool foundInv = false;
+                                    for (int inv = 0; inv < gsm.Player.Inventory.Count; inv++)
+                                    {
+                                        //
+                                        // If there's an item in the player's inventory that equals the currently equipped item's name and it's not special
+                                        // then increment stack value, set equipped to false, and set the equipped item to Ruby Sword
+                                        //
+                                        if (gsm.Player.EquippedWeapon.SpecialObject == false)
+                                        {
+                                            if (gsm.Player.Inventory[inv].Name == gsm.Player.EquippedWeapon.Name)
+                                            {
+                                                //    gsm.Player.Inventory[inv].ItemStackCount += 1;
+                                                //    gsm.Player.EquippedWeapon.Equipped = false;
+                                                //    // if doesnt work then add for loop
+                                                //    gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                //    gsm.Player.EquippedWeapon = gsm.Player.Inventory[inv];
+                                                foundInv = true;
+                                                stopLoop = true;
+
+                                                break;
+                                            }
+                                            else if (gsm.Player.Inventory[item].Name != gsm.Player.EquippedWeapon.Name)
+                                            {
+                                                if (gsm.Player.Inventory[inv].ItemStackCount > 1)
+                                                {
+                                                    gsm.Player.Inventory[inv].ItemStackCount -= 1;
+                                                    gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.EquippedWeapon = gsm.Player.Inventory[inv];
+                                                    gsm.Player.EquippedWeapon.Equipped = true;
+                                                    stopLoop = true;
+                                                    foundInv = true;
+                                                    break;
+                                                }
+                                                else if (gsm.Player.Inventory[inv].ItemStackCount == 1)
+                                                {
+                                                    gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                                    gsm.Player.EquippedItems.Add(gsm.Player.EquippedWeapon);
+                                                    gsm.Player.Inventory.Remove(gsm.Player.Inventory[item]);
+                                                    stopLoop = true;
+                                                    foundInv = true;
+                                                    break;
+                                                }
+                                            }
+
+                                        }
+                                        else if (gsm.Player.EquippedWeapon.SpecialObject == true)
+                                        {
+                                            gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                            gsm.Player.EquippedWeapon = gsm.Player.Inventory[item];
+                                            gsm.Player.EquippedItems.Remove(gsm.Player.EquippedWeapon);
+                                            foundInv = true;
+                                            stopLoop = true;
+
+                                            break;
+                                        }
+                                    }
+                                    if (foundInv == false)
+                                    {
+                                        gsm.Player.Inventory.Add(gsm.Player.EquippedWeapon);
+                                        gsm.Player.EquippedWeapon.Equipped = false;
+                                        stopLoop = true;
+                                        break;
+                                    }
+                                }
+                                #endregion
+
+                                break;
+
+                            default:
                          break;
 	}    
                     }
@@ -268,8 +511,7 @@ namespace TBQuestGame.PresentationLayer
 
                         bool found = false;
                         for (int items = 0; items < gsm.GameMap.CurrentLocation.LootableItems.Count; items++)
-                        {
-
+                        { 
                             if (gsm.GameMap.CurrentLocation.LootableItems[items].Name == gsm.Player.Inventory[item].Name && gsm.Player.Inventory[item].SpecialObject == false)
                             {
                                 gsm.GameMap.CurrentLocation.LootableItems[items].ItemStackCount += 1;
@@ -360,6 +602,16 @@ namespace TBQuestGame.PresentationLayer
                         gsm.Player.Inventory.RemoveAt(item);
                 }
             }
+        }
+
+        private void Label_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void EquippedList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

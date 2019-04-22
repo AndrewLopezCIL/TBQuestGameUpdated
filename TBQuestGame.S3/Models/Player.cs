@@ -42,10 +42,15 @@ namespace TBQuestGame.Models
         private double _minLevelXPRange;
         // May remove quest points in the future
         private int _questPoints;
-
+        private Item _equippedWeapon;
         #endregion
 
         #region PROPERTIES
+        public Item EquippedWeapon
+        {
+            get { return _equippedWeapon; }
+            set { _equippedWeapon = value; }
+        }
         public double MaxLevelXPRange
         {
             get { return Level * _maxLevelXPRange; } 
@@ -141,6 +146,12 @@ namespace TBQuestGame.Models
         {
             get { return _inventory; }
             set { _inventory = value; }
+        }
+        private ObservableCollection<Item> _equippedItems = new ObservableCollection<Item>();
+        public ObservableCollection<Item> EquippedItems
+        {
+            get { return _equippedItems; }
+            set { _equippedItems = value; }
         }
 
         

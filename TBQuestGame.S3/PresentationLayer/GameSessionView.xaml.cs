@@ -70,7 +70,7 @@ namespace TBQuestGame.PresentationLayer
         {
          
             //potion.potionUsedWithCooldown(_gameSessionViewModel);
-            AddEnemyToList("warrior-black");
+             AddEnemyToList("warrior-black");
             //AddEnemyToList("warrior");
             //AddEnemyToList("wizard");
             //AddEnemyToList("scuffedspider");

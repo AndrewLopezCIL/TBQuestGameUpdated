@@ -10,6 +10,13 @@ namespace TBQuestGame.Models
 {
     public abstract class Item
     {
+        private double _swordDamage;
+
+        public double Damage
+        {
+            get { return _swordDamage; }
+            set { _swordDamage = value; }
+        }
         //
         // Current Trackable ID of the Item
         //
@@ -125,6 +132,12 @@ namespace TBQuestGame.Models
         {
             get { return _equipable; }
             set { _equipable = value; }
+        }
+        private bool _itemEquipped;
+        public bool Equipped
+        {
+            get { return _itemEquipped; }
+            set { _itemEquipped = value; }
         }
         //
         // Whether or not the item can be consumed/used ( as in a buff type way not equipable )

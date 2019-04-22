@@ -22,6 +22,14 @@
                     
                 </ListBox>
             </TabItem>
+            <TabItem x:Name="EquippedTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Equipped" MouseLeftButtonDown="Label_MouseLeftButtonDown_2"/>
+                </TabItem.Header>
+                <ListBox x:Name="EquippedList" ItemsSource="{Binding PlayerEquippedItems}" MouseDoubleClick="EquippedList_MouseDoubleClick">
+                    
+                </ListBox>
+            </TabItem>
             <TabItem x:Name="LocationLootTab" Background="LightBlue">
                 <TabItem.Header>
                     <Label Content="Location's Loot" MouseLeftButtonDown="Label_MouseLeftButtonDown_1" />

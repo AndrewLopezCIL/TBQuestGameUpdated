@@ -44,7 +44,7 @@ namespace TBQuestGame.Models
             _gameSessionViewModel.CurrentEnemyID += 1;
             this.ID = _gameSessionViewModel.CurrentEnemyID; 
             RubySword rubySword = new RubySword(_gameSessionViewModel, GSV);
-            rubySword.SpecialObject = true;
+           rubySword.SpecialObject = true;
             rubySword.Damage = 45;
             this.ItemDrop.Add(rubySword);
             //

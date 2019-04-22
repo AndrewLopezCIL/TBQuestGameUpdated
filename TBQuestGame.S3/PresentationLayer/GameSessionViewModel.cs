@@ -92,7 +92,12 @@ namespace TBQuestGame.PresentationLayer
             get { return Player.Inventory; }
             set { Player.Inventory = value; OnPropertyChanged(nameof(PlayerInventory)); }
         }
-        
+        public ObservableCollection<Item> PlayerEquippedItems
+        {
+            get { return Player.EquippedItems; }
+            set { Player.EquippedItems = value; OnPropertyChanged(nameof(PlayerEquippedItems)); }
+        }
+
         public int PlayerLevel
         {
             get { return Player.Level; }

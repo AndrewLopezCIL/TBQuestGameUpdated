@@ -11,8 +11,9 @@ namespace TBQuestGame.DataLayer
     {
         public int currentEnemyID = 0;
         public int itemID = 0;
-        public ObservableCollection<Item> playerInventory;
-        public ObservableCollection<Item> locationLoot;
+      //  public ObservableCollection<Item> playerInventory;
+        //public ObservableCollection<Item> locationLoot;
+       // public ObservableCollection<Item> playerEquippedItems;
         public static Player PlayerData()
         {
 
